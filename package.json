@@ -8,6 +8,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "lint:js": "eslint --ext .js src",
     "md": "env-cmd node src/cli.js",
     "md:test": "env-cmd -f ./testing/.env node src/cli.js"
   },

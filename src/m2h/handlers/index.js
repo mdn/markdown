@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { DEFAULT_LOCALE } from "@mdn/yari/libs/constants/index.js";
 import { code } from "./code.js";
 import { asDefinitionList, isDefinitionList } from "./dl.js";
@@ -8,6 +9,7 @@ import { one, all, wrap } from "./mdast-util-to-hast-utils.js";
 /* A utilitary function which parses a JSON gettext file
   to return a Map with each localized string and its matching ID  */
 function getL10nCardMap(locale = DEFAULT_LOCALE) {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
   // Test if target localization file exists, if
   // not, fallback on English
   let localeFilePath = path.join(

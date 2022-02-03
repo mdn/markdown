@@ -8,7 +8,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "md": "env-cmd node src/cli.js"
+    "md": "env-cmd node src/cli.js",
+    "md:test": "node src/cli.js"
   },
   "dependencies": {
     "@caporal/core": "2.0.2",

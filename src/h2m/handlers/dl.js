@@ -14,7 +14,7 @@ const wrapNonBlocks = (nodes) => {
       }
       result.push(node);
     } else {
-      openParagraph ||= h("paragraph", []);
+      openParagraph = h("paragraph", []);
       openParagraph.children.push(node);
     }
   }

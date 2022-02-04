@@ -29,7 +29,7 @@ const isBlock = convert(["html", "body", "div", "p"]);
 // <https://html.spec.whatwg.org/#the-innertext-idl-attribute>
 // Note that we act as if `node` is being rendered, and as if we’re a
 // CSS-supporting user agent.
-export function toText(node, options) {
+export function toText(node, options = { throw: true }) {
   options.allowedElements = [
     ...(options.allowedElements || []),
     "html",

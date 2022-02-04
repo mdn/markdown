@@ -1,5 +1,5 @@
 {
-  "name": "@mdn/markdown",
+  "name": "@mdn/markdown-converter",
   "description": "MDN Web Docs tool to covert HTML to Markdown and vice versa",
   "export": "./src/cli.js",
   "version": "0.0.1",

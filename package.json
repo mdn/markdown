@@ -1,8 +1,8 @@
 {
-  "name": "markdown",
+  "name": "@mdn/markdown",
   "description": "MDN Web Docs tool to covert HTML to Markdown and vice versa",
   "export": "./src/cli.js",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "repository": "https://github.com/mdn/markdown.git",
   "author": "Mozilla",
   "license": "MIT",

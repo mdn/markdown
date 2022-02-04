@@ -1,7 +1,9 @@
+.dccache
 .editorconfig
 .eslintrc.json
 .github
 .prettierignore
 .prettierrc
+/.env
 testing
 yarn.lock

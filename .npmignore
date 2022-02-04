@@ -1,0 +1,7 @@
+.editorconfig
+.eslintrc.json
+.github
+.prettierignore
+.prettierrc
+testing
+yarn.lock

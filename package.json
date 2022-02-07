@@ -35,7 +35,7 @@
     "remark-rehype": "8.1.0",
     "unified": "9.2.1",
     "unist-builder": "2.0.3",
-    "unist-util-visit": "2.0.3"
+    "unist-util-visit": "4.1.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",

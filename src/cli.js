@@ -10,7 +10,6 @@ import { getRoot } from "@mdn/yari/content/utils.js";
 
 import { h2m } from "./h2m/index.js";
 import { prettyAST } from "./utils/index.js";
-import { m2h } from "./index.js";
 import { toSelector } from "./h2m/utils.js";
 
 const require = createRequire(import.meta.url);
@@ -201,29 +200,6 @@ program
       }
 
       saveProblemsReport(problems);
-    })
-  )
-
-  .command("m2h", "Convert Markdown to HTML")
-  .option("--locale", "Targets a specific locale", {
-    default: "all",
-    validator: Array.from(VALID_LOCALES.values()).concat("all"),
-  })
-  .argument("[folder]", "convert by folder")
-  .action(
-    tryOrExit(async ({ args, options }) => {
-      const all = Document.findAll({
-        folderSearch: args.folder,
-        locales: buildLocaleMap(options.locale),
-      });
-      for (let doc of all.iter()) {
-        if (!doc.isMarkdown) {
-          continue;
-        }
-        const { body: m, attributes: metadata } = fm(doc.rawContent);
-        const h = await m2h(m, { locale: doc.metadata.locale });
-        saveFile(doc.fileInfo.path.replace(/\.md$/, ".html"), h, metadata);
-      }
     })
   );
 

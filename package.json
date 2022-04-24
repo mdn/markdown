@@ -1,6 +1,6 @@
 {
   "name": "@mdn/markdown-converter",
-  "description": "MDN Web Docs tool to covert HTML to Markdown and vice versa",
+  "description": "MDN Web Docs tool to covert HTML to Markdown",
   "export": "./src/cli.js",
   "version": "0.0.1",
   "repository": "https://github.com/mdn/markdown.git",

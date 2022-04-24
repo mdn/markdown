@@ -1,6 +1,6 @@
-import { DEFINITION_PREFIX } from "../../m2h/handlers/dl.js";
 import { h, isBlockContent } from "../h.js";
 
+const DEFINITION_PREFIX = ": ";
 const DEFINITION_START = h("text", DEFINITION_PREFIX);
 
 const wrapNonBlocks = (nodes) => {

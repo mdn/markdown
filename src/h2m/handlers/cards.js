@@ -27,62 +27,31 @@ const gettextLocalizationMap = (() => {
 })();
 
 export const cards = [
-  ...["note", "warning"].map((className) => [
-    (node, { locale = DEFAULT_LOCALE }) => {
-      const defaultLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      let currentLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      if (gettextLocalizationMap.has(locale)) {
-        currentLocaleGt = gettextLocalizationMap.get(locale);
-      }
-      if (!(node.properties.className || []).some((c) => c == className)) {
-        return false;
-      }
-      if (!node.children || !node.children[0]) {
-        return false;
-      }
-      const [child] = node.children;
-      if (!child.children || !child.children[0]) {
-        return false;
-      }
-      const grandChild = child.children[0];
-      return (
-        grandChild.tagName == "strong" &&
-        (toText(grandChild) ==
-          currentLocaleGt.gettext("card_" + className + "_label") ||
-          toText(grandChild) ==
-            defaultLocaleGt.gettext("card_" + className + "_label"))
-      );
+  ...["note", "warning", "callout"].map((className) => [
+    {
+      is: "div",
+      hasClass: className,
     },
     (node, t, { locale = DEFAULT_LOCALE }) => {
-      let gt = gettextLocalizationMap.get(DEFAULT_LOCALE);
+      const defaultLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
+      let gt = defaultLocaleGt;
       if (gettextLocalizationMap.has(locale)) {
         gt = gettextLocalizationMap.get(locale);
       }
+
+      const grandChild = node.children[0]?.children[0];
+      const grandChildIsLabel =
+        toText(grandChild) == gt.gettext("card_" + className + "_label") ||
+        toText(grandChild) ==
+          defaultLocaleGt.gettext("card_" + className + "_label");
       return h("blockquote", [
         h("paragraph", [
           h("strong", [h("text", gt.gettext("card_" + className + "_label"))]),
-          ...asArray(t(node.children[0].children.slice(1))),
+          ...asArray(
+            t(grandChildIsLabel ? node.children.slice(1) : node.children)
+          ),
         ]),
-        ...asArray(t(node.children.slice(1))),
       ]);
     },
   ]),
-
-  [
-    (node) =>
-      node.tagName == "div" &&
-      (node.properties.className || "").includes("callout"),
-    (node, t, { locale = DEFAULT_LOCALE }) => {
-      let gt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      if (gettextLocalizationMap.has(locale)) {
-        gt = gettextLocalizationMap.get(locale);
-      }
-      return h("blockquote", [
-        h("paragraph", [
-          h("strong", [h("text", gt.gettext("card_callout_label"))]),
-        ]),
-        ...asArray(t(node.children)),
-      ]);
-    },
-  ],
 ];

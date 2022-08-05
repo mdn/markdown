@@ -53,14 +53,53 @@ export const cards = [
       ];
 
       const firstChild = children[0];
-      const firstChildIsLabel =
-        firstChild && labelText.includes(toText(firstChild));
+
+      let childrenToAdd = [h("text", " "), ...asArray(t(children))];
+
+      if (firstChild) {
+        if (firstChild.tagName == "strong") {
+          if (labelText.includes(toText(firstChild).trim())) {
+            // First child is already the proper label
+            childrenToAdd = asArray(t(children.slice(1)));
+          } else if (labelText.includes(toText(firstChild) + ":")) {
+            // The colon is outside of the first child
+            childrenToAdd = [
+              h("text", " "),
+              ...asArray(
+                t([
+                  { ...children[1], value: children[1].value.substr(1) },
+                  ...children.slice(2),
+                ])
+              ),
+            ];
+          } else if (
+            firstChild.value &&
+            labelText.some((t) => firstChild.value.startsWith(t))
+          ) {
+            // No strong tag, but the text is preceded with the proper label
+            childrenToAdd = [
+              h("text", " "),
+              ...asArray(
+                t([
+                  {
+                    ...children[0],
+                    value: children[0].value.replace(
+                      new RegExp(`^${labelText.join("|")} `, "g"),
+                      ""
+                    ),
+                  },
+                  ...children.slice(1),
+                ])
+              ),
+            ];
+          }
+        }
+      }
 
       return h("blockquote", [
         h("paragraph", [
           h("strong", [h("text", labelText[0])]),
-          h("text", firstChildIsLabel ? "" : " "),
-          ...asArray(t(firstChildIsLabel ? children.slice(1) : children)),
+          ...childrenToAdd,
         ]),
       ]);
     },

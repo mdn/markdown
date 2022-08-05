@@ -57,6 +57,7 @@ export const cards = [
       return h("blockquote", [
         h("paragraph", [
           h("strong", [h("text", gt.gettext("card_" + className + "_label"))]),
+          ...[!firstChildIsLabel && h("text", " ")],
           ...asArray(t(firstChildIsLabel ? children.splice(1) : children)),
         ]),
       ]);

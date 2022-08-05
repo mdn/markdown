@@ -140,6 +140,7 @@ export const handlers = [
         "short_text",
         "js-about-module-abstr",
         "comment",
+        "unicode",
       ],
     },
     (node, t) => t(node),

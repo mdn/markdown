@@ -105,7 +105,13 @@ export const handlers = [
     {
       is: "div",
       canHave: "id",
-      canHaveClass: ["twocolumns", "threecolumns", "noinclude"],
+      canHaveClass: [
+        "twocolumns",
+        "threecolumns",
+        "noinclude",
+        "summary",
+        "seoSummary",
+      ],
     },
     (node, t) => t(node),
   ],

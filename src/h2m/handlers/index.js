@@ -85,10 +85,20 @@ export const handlers = [
       canHave: ["id", "name", "style", "dir"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },
-    (node, t) =>
-      h("heading", t(node, { shouldWrap: true, singleLine: true }), {
-        depth: Number(node.tagName.charAt(1)) || 1,
-      }),
+    (node, t) => {
+      const hasOnlyStrongChild =
+        node.children.length == 1 && node.children[0].tagName == "strong";
+      return h(
+        "heading",
+        t(hasOnlyStrongChild ? node.children[0] : node, {
+          shouldWrap: true,
+          singleLine: true,
+        }),
+        {
+          depth: Number(node.tagName.charAt(1)) || 1,
+        }
+      );
+    },
   ],
 
   [

@@ -7,7 +7,12 @@ export const tables = [
     {
       is: "table",
       canHave: ["style"],
-      canHaveClass: ["standard-table", "fullwidth-table", "properties"],
+      canHaveClass: [
+        "standard-table",
+        "fullwidth-table",
+        "properties",
+        "nostripe",
+      ],
     },
     (node, t) =>
       h(
@@ -33,9 +38,10 @@ export const tables = [
         options.rowIndex == 0 && {
           is: "th",
           canHaveClass: "header",
-          canHave: { scope: "col" },
+          canHave: ["scope", "style"],
         },
-      (node, options) => options.rowIndex > 0 && "td",
+      (node, options) =>
+        options.rowIndex > 0 && { is: "td", canHave: ["scope", "style"] },
     ],
     (node, t) => h("tableCell", t(node, { shouldWrap: true })),
   ],

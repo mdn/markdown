@@ -31,6 +31,7 @@ export const cards = [
     {
       is: "div",
       hasClass: className,
+      canHaveClass: ["blockIndicator"],
     },
     (node, t, { locale = DEFAULT_LOCALE }) => {
       const defaultLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);

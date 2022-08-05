@@ -78,7 +78,7 @@ export const handlers = [
   [
     {
       is: ["h1", "h2", "h3", "h4", "h5"],
-      canHave: ["id", "name", "style"],
+      canHave: ["id", "name", "style", "dir"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },
     (node, t) =>
@@ -99,7 +99,7 @@ export const handlers = [
   [
     {
       is: ["span", "small"],
-      canHave: ["id", "style", "lang"],
+      canHave: ["id", "style", "lang", "title"],
       canHaveClass: [
         "pl-s",
         "highlight-span",
@@ -112,6 +112,11 @@ export const handlers = [
         "blob-code-inner",
         "blob-code-marker",
         "result_box",
+        "hps",
+        "tlid-translation",
+        "translation",
+        "seoSummary",
+        "subtitle",
       ],
     },
     (node, t) => t(node),
@@ -130,7 +135,7 @@ export const handlers = [
     {
       is: "p",
       canHave: ["id", "style", "dir", "lang"],
-      canHaveClass: ["brush:", "js"],
+      canHaveClass: ["brush:", "js", "summary"],
     },
     "paragraph",
   ],
@@ -148,7 +153,7 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["title", "rel", "target", "hrefLang", "lang"],
+      canHave: ["title", "rel", "target", "hrefLang", "lang", "style"],
       canHaveClass: [
         "link-https",
         "mw-redirect",
@@ -156,6 +161,8 @@ export const handlers = [
         "external",
         "external-icon",
         "local-anchor",
+        "cta",
+        "primary",
       ],
     },
     (node, t) =>
@@ -215,7 +222,7 @@ export const handlers = [
   ],
 
   [
-    "code",
+    { is: "code", canHave: ["style", "title"] },
     (node, t, opts) => {
       const targetNode =
         node.children.length == 1 && node.children[0].tagName == "var"

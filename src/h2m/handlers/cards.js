@@ -47,16 +47,18 @@ export const cards = [
         children = children[0].children;
       }
 
+      const labelText = [
+        gt.gettext("card_" + className + "_label"),
+        defaultLocaleGt.gettext("card_" + className + "_label"),
+      ];
+
       const firstChild = children[0];
       const firstChildIsLabel =
-        firstChild &&
-        (toText(firstChild) == gt.gettext("card_" + className + "_label") ||
-          toText(firstChild) ==
-            defaultLocaleGt.gettext("card_" + className + "_label"));
+        firstChild && labelText.includes(toText(firstChild));
 
       return h("blockquote", [
         h("paragraph", [
-          h("strong", [h("text", gt.gettext("card_" + className + "_label"))]),
+          h("strong", [h("text", labelText[0])]),
           ...[!firstChildIsLabel && h("text", " ")],
           ...asArray(t(firstChildIsLabel ? children.splice(1) : children)),
         ]),

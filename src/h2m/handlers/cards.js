@@ -60,7 +60,7 @@ export const cards = [
         h("paragraph", [
           h("strong", [h("text", labelText[0])]),
           ...[!firstChildIsLabel && h("text", " ")],
-          ...asArray(t(firstChildIsLabel ? children.splice(1) : children)),
+          ...asArray(t(firstChildIsLabel ? children.slice(1) : children)),
         ]),
       ]);
     },

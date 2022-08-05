@@ -39,17 +39,23 @@ export const cards = [
         gt = gettextLocalizationMap.get(locale);
       }
 
-      const grandChild = node.children[0]?.children[0];
-      const grandChildIsLabel =
-        toText(grandChild) == gt.gettext("card_" + className + "_label") ||
-        toText(grandChild) ==
+      let children = node.children;
+
+      if (children.length == 1 && children[0].tagName == "p") {
+        // If note is surrounded by paragraph tag, use its contents
+        children = children[0].children;
+      }
+
+      const firstChild = children[0];
+      const firstChildIsLabel =
+        toText(firstChild) == gt.gettext("card_" + className + "_label") ||
+        toText(firstChild) ==
           defaultLocaleGt.gettext("card_" + className + "_label");
+
       return h("blockquote", [
         h("paragraph", [
           h("strong", [h("text", gt.gettext("card_" + className + "_label"))]),
-          ...asArray(
-            t(grandChildIsLabel ? node.children.slice(1) : node.children)
-          ),
+          ...asArray(t(firstChildIsLabel ? children.splice(1) : children)),
         ]),
       ]);
     },

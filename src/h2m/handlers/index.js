@@ -339,11 +339,11 @@ export const handlers = [
   ["blockquote", (node, t) => h("blockquote", wrap(t(node)))],
 
   [
-    { is: ["i", "em"], canHave: "style" },
+    { is: ["i", "em"], canHave: ["style", "lang"] },
     (node, t) => extractSpacing(h("emphasis", t(node))),
   ],
   [
-    { is: ["b", "strong"], canHave: "style" },
+    { is: ["b", "strong"], canHave: ["style", "lang"] },
     (node, t) => extractSpacing(h("strong", t(node))),
   ],
 

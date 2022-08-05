@@ -19,6 +19,9 @@ const getTransformProcessor = (options) =>
     .use(remarkPrettier, {
       report: false,
       options: { embeddedLanguageFormatting: "off" },
+    })
+    .use({
+      settings: { emphasis: "_" },
     });
 
 export async function h2m(html, { printAST, locale } = {}) {

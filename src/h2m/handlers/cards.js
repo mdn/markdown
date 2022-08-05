@@ -48,9 +48,10 @@ export const cards = [
 
       const firstChild = children[0];
       const firstChildIsLabel =
-        toText(firstChild) == gt.gettext("card_" + className + "_label") ||
-        toText(firstChild) ==
-          defaultLocaleGt.gettext("card_" + className + "_label");
+        firstChild &&
+        (toText(firstChild) == gt.gettext("card_" + className + "_label") ||
+          toText(firstChild) ==
+            defaultLocaleGt.gettext("card_" + className + "_label"));
 
       return h("blockquote", [
         h("paragraph", [

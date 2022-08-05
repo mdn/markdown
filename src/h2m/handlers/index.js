@@ -148,10 +148,11 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["title", "rel", "target", "lang"],
+      canHave: ["title", "rel", "target", "hrefLang", "lang"],
       canHaveClass: [
         "link-https",
         "mw-redirect",
+        "internal",
         "external",
         "external-icon",
         "local-anchor",

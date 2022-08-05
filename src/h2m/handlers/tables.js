@@ -4,7 +4,11 @@ export const tables = [
   [{ is: "caption" }, (node, t) => t(node)],
 
   [
-    { is: "table", canHaveClass: "standard-table" },
+    {
+      is: "table",
+      canHave: ["style"],
+      canHaveClass: ["standard-table", "fullwidth-table", "properties"],
+    },
     (node, t) =>
       h(
         "table",

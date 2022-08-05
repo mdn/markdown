@@ -59,7 +59,7 @@ export const cards = [
       return h("blockquote", [
         h("paragraph", [
           h("strong", [h("text", labelText[0])]),
-          ...[!firstChildIsLabel && h("text", " ")],
+          h("text", firstChildIsLabel ? "" : " "),
           ...asArray(t(firstChildIsLabel ? children.slice(1) : children)),
         ]),
       ]);

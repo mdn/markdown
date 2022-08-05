@@ -70,12 +70,15 @@ export const handlers = [
   ...tables,
   ...cards,
 
-  [["html", "head", "body"], (node, t) => wrap(t(node))],
+  [
+    ["html", "head", "body", "section", "aside", "article"],
+    (node, t) => wrap(t(node)),
+  ],
 
   [
     {
       is: ["h1", "h2", "h3", "h4", "h5"],
-      canHave: "id",
+      canHave: ["id", "name", "style"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },
     (node, t) =>
@@ -85,14 +88,18 @@ export const handlers = [
   ],
 
   [
-    { is: "div", canHaveClass: ["twocolumns", "threecolumns", "noinclude"] },
+    {
+      is: "div",
+      canHave: "id",
+      canHaveClass: ["twocolumns", "threecolumns", "noinclude"],
+    },
     (node, t) => t(node),
   ],
 
   [
     {
       is: ["span", "small"],
-      canHave: "id",
+      canHave: ["id", "style", "lang"],
       canHaveClass: [
         "pl-s",
         "highlight-span",
@@ -104,12 +111,29 @@ export const handlers = [
         "message-body-wrapper",
         "blob-code-inner",
         "blob-code-marker",
+        "result_box",
       ],
     },
     (node, t) => t(node),
   ],
 
-  [{ is: "p", canHaveClass: ["brush:", "js"] }, "paragraph"],
+  // Ignore any font elements
+  [
+    {
+      is: "font",
+      canHave: ["color", "face"],
+    },
+    (node, t, opts) => t(node.children),
+  ],
+
+  [
+    {
+      is: "p",
+      canHave: ["id", "style", "dir", "lang"],
+      canHaveClass: ["brush:", "js"],
+    },
+    "paragraph",
+  ],
   [
     "br",
     (node, t, { shouldWrap, singleLine }) =>
@@ -124,8 +148,14 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["title", "rel", "target"],
-      canHaveClass: ["link-https", "mw-redirect", "external", "external-icon"],
+      canHave: ["title", "rel", "target", "lang"],
+      canHaveClass: [
+        "link-https",
+        "mw-redirect",
+        "external",
+        "external-icon",
+        "local-anchor",
+      ],
     },
     (node, t) =>
       h("link", t(node), {
@@ -266,7 +296,7 @@ export const handlers = [
     {
       is: "img",
       has: "src",
-      canHave: ["title", "alt"],
+      canHave: ["title", "alt", "style"],
       canHaveClass: "internal",
     },
     (node) => {
@@ -283,8 +313,14 @@ export const handlers = [
 
   ["blockquote", (node, t) => h("blockquote", wrap(t(node)))],
 
-  [{ is: ["i", "em"] }, (node, t) => extractSpacing(h("emphasis", t(node)))],
-  [{ is: ["b", "strong"] }, (node, t) => extractSpacing(h("strong", t(node)))],
+  [
+    { is: ["i", "em"], canHave: "style" },
+    (node, t) => extractSpacing(h("emphasis", t(node))),
+  ],
+  [
+    { is: ["b", "strong"], canHave: "style" },
+    (node, t) => extractSpacing(h("strong", t(node))),
+  ],
 
   [
     "q",

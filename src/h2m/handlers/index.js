@@ -281,7 +281,7 @@ export const handlers = [
           "no-line-numbers",
           "line-numbers",
           "notranslate",
-          "language-css",
+          `language-${lang}`,
           (className) => className.startsWith("highlight"),
           (className) => className.startsWith("[") && className.endsWith("]"),
         ],

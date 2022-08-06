@@ -38,7 +38,7 @@ const CONTENT = [
 ];
 
 const CHILDREN_TYPES = {
-  paragraph: PHRASING_CONTENT,
+  paragraph: ["paragraph", ...PHRASING_CONTENT],
   heading: PHRASING_CONTENT,
   blockquote: BLOCK_CONTENT,
   list: ["listItem"],

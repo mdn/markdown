@@ -289,6 +289,7 @@ export const handlers = [
       {
         is: "pre",
         hasClass,
+        canHave: ["style", "dir"],
         canHaveClass: [
           "brush:",
           "brush",

@@ -353,6 +353,14 @@ export const handlers = [
     { is: ["b", "strong"], canHave: ["style", "lang"] },
     (node, t) => extractSpacing(h("strong", t(node))),
   ],
+  [
+    { is: "u", canHave: ["style", "lang"] },
+    (node, t) => extractSpacing(h("underline", t(node))),
+  ],
+  [
+    { is: ["s", "del"], canHave: ["style", "lang"] },
+    (node, t) => extractSpacing(h("delete", t(node))),
+  ],
 
   [
     "q",

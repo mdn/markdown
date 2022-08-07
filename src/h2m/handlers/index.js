@@ -106,6 +106,7 @@ export const handlers = [
       is: "div",
       canHave: "id",
       canHaveClass: [
+        "callout",
         "column-container",
         "column-half",
         "twocolumns",
@@ -218,7 +219,11 @@ export const handlers = [
   ],
 
   [
-    { is: "li", canHave: ["id", "style", "lang", "dir"] },
+    {
+      is: "li",
+      canHave: ["id", "style", "lang", "dir"],
+      canHaveClass: ["summary"],
+    },
     (node, t) => {
       const content = wrap(t(node));
       return h("listItem", content, { spread: content.length > 1 });

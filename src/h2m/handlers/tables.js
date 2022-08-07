@@ -10,6 +10,7 @@ export const tables = [
       canHaveClass: [
         "standard-table",
         "fullwidth-table",
+        "full-width-table",
         "properties",
         "nostripe",
       ],

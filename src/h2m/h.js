@@ -7,6 +7,7 @@ const STATIC_PHRASING_CONTENT = [
   "underline",
   "delete",
   "html",
+  "code",
   "inlineCode",
   "break",
   "image",
@@ -15,7 +16,12 @@ const STATIC_PHRASING_CONTENT = [
   "footnoteReference",
 ];
 
-const PHRASING_CONTENT = [...STATIC_PHRASING_CONTENT, "paragraph", "link", "linkReference"];
+const PHRASING_CONTENT = [
+  ...STATIC_PHRASING_CONTENT,
+  "paragraph",
+  "link",
+  "linkReference",
+];
 
 const BLOCK_CONTENT = [
   "paragraph",

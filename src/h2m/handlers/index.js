@@ -106,6 +106,8 @@ export const handlers = [
       is: "div",
       canHave: "id",
       canHaveClass: [
+        "column-container",
+        "column-half",
         "twocolumns",
         "threecolumns",
         "noinclude",

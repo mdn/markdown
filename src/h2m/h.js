@@ -14,6 +14,7 @@ export const commonClasses = [
   "nowiki",
   "notranslate",
   "text",
+  "learnmore",
 ];
 
 const STATIC_PHRASING_CONTENT = [

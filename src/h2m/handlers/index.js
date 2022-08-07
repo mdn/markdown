@@ -160,7 +160,7 @@ export const handlers = [
   [
     {
       is: "p",
-      canHave: ["id", "style", "dir", "lang"],
+      canHave: ["id", "style", "dir", "lang", "align"],
       canHaveClass: ["brush:", "js", "summary"],
     },
     "paragraph",

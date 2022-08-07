@@ -191,10 +191,13 @@ export const handlers = [
         "primary",
       ],
     },
-    (node, t) =>
+    (node, t, { locale = DEFAULT_LOCALE }) =>
       h("link", t(node), {
         title: node.properties.title || null,
-        url: node.properties.href,
+        url: node.properties.href.replace(
+          /^((https?:\/\/)?developer\.mozilla\.org)?\/[\w-]+\/docs/,
+          `/${locale}/docs`
+        ),
       }),
   ],
 

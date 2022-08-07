@@ -30,6 +30,16 @@ This is a paragraph with a link to [this page](/en-US/docs/Markdown/Tool/H2M).
 
 This is a paragraph with a link to [another page](/en-US/docs/Web).
 
+### Cards
+
+> **Note:** you should also check out this [other cool page](https://www.queengoob.org)!
+
+> **Note:** Thanks for contributing to MDN!
+
+> **Warning:** the above implementation is partially buggy. It is recommended to use `helloWorld();` instead.
+
+> **Callout:** remember to remove unneeded whitespace.
+
 ### A Definition List
 
 - Key
@@ -38,7 +48,7 @@ This is a paragraph with a link to [another page](/en-US/docs/Web).
 ### Some code blocks
 
 ```html
-  <canvas id="game" width="128" height="128"></canvas>
+<canvas id="game" width="128" height="128"></canvas>
 ```
 
 ```js

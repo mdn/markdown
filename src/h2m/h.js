@@ -15,7 +15,7 @@ const STATIC_PHRASING_CONTENT = [
   "footnoteReference",
 ];
 
-const PHRASING_CONTENT = [...STATIC_PHRASING_CONTENT, "link", "linkReference"];
+const PHRASING_CONTENT = [...STATIC_PHRASING_CONTENT, "paragraph", "link", "linkReference"];
 
 const BLOCK_CONTENT = [
   "paragraph",
@@ -39,7 +39,7 @@ const CONTENT = [
 ];
 
 const CHILDREN_TYPES = {
-  paragraph: ["paragraph", ...PHRASING_CONTENT],
+  paragraph: PHRASING_CONTENT,
   heading: PHRASING_CONTENT,
   blockquote: BLOCK_CONTENT,
   list: ["listItem"],

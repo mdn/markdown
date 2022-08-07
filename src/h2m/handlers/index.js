@@ -104,14 +104,21 @@ export const handlers = [
   [
     {
       is: "div",
-      canHave: "id",
+      canHave: ["id", "dir", "lang", "style"],
       canHaveClass: [
         "callout",
         "column-container",
         "column-half",
+        "column-2",
+        "column-4",
+        "column-6",
+        "column-8",
+        "column-10",
+        "column-12",
         "twocolumns",
         "threecolumns",
         "equalColumnHeights",
+        "align-center",
         ...commonClasses,
       ],
     },

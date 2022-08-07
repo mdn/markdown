@@ -13,6 +13,7 @@ export const commonClasses = [
   "unicode",
   "nowiki",
   "notranslate",
+  "text",
 ];
 
 const STATIC_PHRASING_CONTENT = [

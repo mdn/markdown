@@ -69,9 +69,7 @@ export const cards = [
                 t([
                   {
                     ...children[1],
-                    value: children[1].value.substr(
-                      children[1].value.startsWith(":") ? 1 : 0
-                    ),
+                    value: children[1].value.replace(/^:\s+/, " "),
                   },
                   ...children.slice(2),
                 ])

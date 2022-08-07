@@ -252,7 +252,7 @@ export const handlers = [
   ],
 
   [
-    { is: "code", canHave: ["style", "title"] },
+    { is: ["code", "samp"], canHave: ["style", "title"] },
     (node, t, opts) => {
       const targetNode =
         node.children.length == 1 && node.children[0].tagName == "var"

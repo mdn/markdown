@@ -197,7 +197,11 @@ export const handlers = [
   ],
 
   [
-    { is: ["ul", "ol"], canHaveClass: "threecolumns" },
+    {
+      is: ["ul", "ol"],
+      canHave: ["id", "style", "lang", "dir"],
+      canHaveClass: "threecolumns",
+    },
     function list(node, t) {
       const ordered = node.tagName == "ol";
       return h("list", t(node), {
@@ -209,7 +213,7 @@ export const handlers = [
   ],
 
   [
-    { is: "li", canHave: "id" },
+    { is: "li", canHave: ["id", "style", "lang", "dir"] },
     (node, t) => {
       const content = wrap(t(node));
       return h("listItem", content, { spread: content.length > 1 });

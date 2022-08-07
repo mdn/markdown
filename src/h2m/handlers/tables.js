@@ -33,16 +33,7 @@ export const tables = [
   ["tr", "tableRow"],
 
   [
-    [
-      (node, options) =>
-        options.rowIndex == 0 && {
-          is: "th",
-          canHaveClass: "header",
-          canHave: ["scope", "style"],
-        },
-      (node, options) =>
-        options.rowIndex > 0 && { is: "td", canHave: ["scope", "style"] },
-    ],
+    { is: ["th", "td"], canHave: ["scope", "style"], canHaveClass: "header" },
     (node, t) => h("tableCell", t(node, { shouldWrap: true })),
   ],
 ];

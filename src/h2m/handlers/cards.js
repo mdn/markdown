@@ -67,7 +67,12 @@ export const cards = [
               h("text", " "),
               ...asArray(
                 t([
-                  { ...children[1], value: children[1].value.substr(1) },
+                  {
+                    ...children[1],
+                    value: children[1].value.substr(
+                      children[1].value.startsWith(":") ? 1 : 0
+                    ),
+                  },
                   ...children.slice(2),
                 ])
               ),

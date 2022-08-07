@@ -61,7 +61,7 @@ export const cards = [
           if (labelText.includes(toText(firstChild).trim())) {
             // First child is already the proper label
             childrenToAdd = asArray(t(children.slice(1)));
-          } else if (labelText.includes(toText(firstChild) + ":")) {
+          } else if (labelText.includes(toText(firstChild).trim() + ":")) {
             // The colon is outside of the first child
             childrenToAdd = [
               h("text", " "),

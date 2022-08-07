@@ -10,7 +10,8 @@
   "scripts": {
     "lint:js": "eslint --ext .js src",
     "md": "env-cmd node src/cli.js",
-    "md:test": "env-cmd -f ./testing/.env node src/cli.js"
+    "md:test": "env-cmd -f ./testing/.env node src/cli.js",
+    "test": "yarn md:test h2m markdown/tool/h2m --locale en-US && diff -s testing/content/files/en-us/markdown/tool/h2m/index.md testing/content/files/en-us/markdown/tool/h2m/expected.md"
   },
   "dependencies": {
     "@caporal/core": "2.0.2",

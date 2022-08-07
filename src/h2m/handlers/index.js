@@ -1,6 +1,6 @@
 import trimTrailingLines from "trim-trailing-lines";
 
-import { h } from "../h.js";
+import { h, commonClasses } from "../h.js";
 import { asArray, toPrettyHTML, wrapText } from "../utils.js";
 import { cards } from "./cards.js";
 import { dl } from "./dl.js";
@@ -111,10 +111,8 @@ export const handlers = [
         "column-half",
         "twocolumns",
         "threecolumns",
-        "noinclude",
-        "summary",
-        "seoSummary",
         "equalColumnHeights",
+        ...commonClasses,
       ],
     },
     (node, t) => t(node),
@@ -125,7 +123,6 @@ export const handlers = [
       is: ["span", "small"],
       canHave: ["id", "style", "lang", "title"],
       canHaveClass: [
-        "pl-s",
         "highlight-span",
         "objectBox",
         "objectBox-string",
@@ -137,15 +134,8 @@ export const handlers = [
         "blob-code-marker",
         "result_box",
         "hps",
-        "tlid-translation",
-        "translation",
-        "summary",
-        "seoSummary",
-        "subtitle",
-        "short_text",
         "js-about-module-abstr",
-        "comment",
-        "unicode",
+        ...commonClasses,
       ],
     },
     (node, t) => t(node),
@@ -192,6 +182,7 @@ export const handlers = [
         "local-anchor",
         "cta",
         "primary",
+        ...commonClasses,
       ],
     },
     (node, t, { locale = DEFAULT_LOCALE }) =>
@@ -224,7 +215,7 @@ export const handlers = [
     {
       is: "li",
       canHave: ["id", "style", "lang", "dir"],
-      canHaveClass: ["summary"],
+      canHaveClass: commonClasses,
     },
     (node, t) => {
       const content = wrap(t(node));
@@ -307,6 +298,7 @@ export const handlers = [
         hasClass,
         canHave: ["style", "dir"],
         canHaveClass: [
+          ...commonClasses,
           "brush:",
           "brush",
           "example-good",
@@ -314,7 +306,6 @@ export const handlers = [
           "hidden",
           "no-line-numbers",
           "line-numbers",
-          "notranslate",
           `language-${lang}`,
           (className) => className.startsWith("highlight"),
           (className) => className.startsWith("[") && className.endsWith("]"),

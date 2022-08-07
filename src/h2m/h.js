@@ -1,5 +1,20 @@
 import { asArray, InvalidASTError } from "./utils.js";
 
+export const commonClasses = [
+  "noinclude",
+  "summary",
+  "seoSummary",
+  "pl-s",
+  "tlid-translation",
+  "translation",
+  "subtitle",
+  "short_text",
+  "comment",
+  "unicode",
+  "nowiki",
+  "notranslate",
+];
+
 const STATIC_PHRASING_CONTENT = [
   "text",
   "emphasis",

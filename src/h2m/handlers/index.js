@@ -74,10 +74,7 @@ export const handlers = [
     ["html", "head", "body", "section", "aside", "article"],
     (node, t) => wrap(t(node)),
   ],
-  [
-    { is: "section", canHave: { id: "Quick_links" } },
-    (node, t) => wrap(t(node)),
-  ],
+  [{ is: "section" }, (node, t) => wrap(t(node))],
 
   [
     {

@@ -70,11 +70,11 @@ export const handlers = [
   ...tables,
   ...cards,
 
+  // Reminder: section#Quick_links is a special section for the sidebar and should be ignored
   [
     ["html", "head", "body", "section", "aside", "article"],
     (node, t) => wrap(t(node)),
   ],
-  [{ is: "section" }, (node, t) => wrap(t(node))],
 
   [
     {

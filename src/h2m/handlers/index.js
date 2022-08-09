@@ -366,12 +366,8 @@ export const handlers = [
     (node, t) => extractSpacing(h("emphasis", t(node))),
   ],
   [
-    { is: ["b", "strong"], canHave: ["style", "lang"] },
+    { is: ["b", "strong", "u"], canHave: ["style", "lang"] },
     (node, t) => extractSpacing(h("strong", t(node))),
-  ],
-  [
-    { is: "u", canHave: ["style", "lang"] },
-    (node, t) => extractSpacing(h("underline", t(node))),
   ],
   [
     { is: ["s", "del"], canHave: ["style", "lang"] },

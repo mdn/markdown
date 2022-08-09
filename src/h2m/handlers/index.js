@@ -355,6 +355,8 @@ export const handlers = [
 
   [{ is: "math", canHave: "display" }, (node) => h("html", toPrettyHTML(node))],
 
+  ["hr", (node) => h("thematicBreak")],
+
   ["blockquote", (node, t) => h("blockquote", wrap(t(node)))],
 
   [

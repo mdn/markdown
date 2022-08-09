@@ -29,7 +29,7 @@ const gettextLocalizationMap = (() => {
 export const cards = [
   ...["note", "warning", "callout"].map((className) => [
     {
-      is: "div",
+      is: ["div", "p"],
       hasClass: className,
       canHaveClass: ["blockIndicator"],
     },

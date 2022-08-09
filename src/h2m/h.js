@@ -21,6 +21,7 @@ export const commonClasses = [
   "offscreen",
   "smaller",
   "larger",
+  "lang",
 ];
 
 const STATIC_PHRASING_CONTENT = [

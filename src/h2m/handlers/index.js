@@ -140,16 +140,17 @@ export const handlers = [
         "hps",
         "js-about-module-abstr",
         ...commonClasses,
+        (className) => className.startsWith("lang-"),
       ],
     },
     (node, t) => t(node),
   ],
 
-  // Ignore any font elements
+  // Ignore any font-altering elements
   [
     {
-      is: "font",
-      canHave: ["color", "face"],
+      is: ["font", "sup", "sub"],
+      canHave: ["color", "face", "style"],
     },
     (node, t, opts) => t(node.children),
   ],
@@ -186,6 +187,7 @@ export const handlers = [
         "local-anchor",
         "cta",
         "primary",
+        "new",
         ...commonClasses,
       ],
     },

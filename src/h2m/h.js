@@ -22,6 +22,8 @@ export const commonClasses = [
   "smaller",
   "larger",
   "lang",
+  "internal",
+  "external",
 ];
 
 const STATIC_PHRASING_CONTENT = [

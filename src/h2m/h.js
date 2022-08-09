@@ -15,6 +15,12 @@ export const commonClasses = [
   "notranslate",
   "text",
   "learnmore",
+  "section",
+  "row",
+  "topicpage-table",
+  "offscreen",
+  "smaller",
+  "larger",
 ];
 
 const STATIC_PHRASING_CONTENT = [

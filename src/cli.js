@@ -191,11 +191,7 @@ program
             saveFile(
               doc.fileInfo.path.replace(/\.html$/, ".md"),
               markdown,
-              {
-                ...metadata,
-                htmlDate: new Date(doc.metadata.modified),
-              },
-              ["htmlDate"]
+              metadata
             );
           }
         }

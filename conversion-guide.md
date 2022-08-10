@@ -38,20 +38,9 @@ You can see examples of such reports:
 
 If the message did not appear and there was no new report file, great! That means that the conversion was 100% successful and you can now perform the real conversion.
 
-### Common unhandled elements
+#### Common unhandled elements
 
-There are a number of elements you will often see in the "unhandled elements list". This section will list the most common ones, and how to handle them.
-
-#### Convert if needed
-
-There are some elements that should either be converted to Markdown or left as HTML depending on its children.
-
-- `table`
-  - Often times, a table will have cells that span multiple columns; because this cannot be represented in Markdown, if there are any cells with `rowspan` or `colspan` properties, leave the table as HTML.
-
-#### Fix and convert
-
-Some elements have critical issues that need to be fixed before they can be converted.
+There are a number of elements you will often see in the "unhandled elements list". This section will list the most common ones you will see, and how to fix them for conversion.
 
 - `dl` > `dt`/`dd`
   - The conversion script has strict expectations for the contents of a `dl` element. The first child element should be a `dt` element, and for every `dt` element, there should be **one**, and only one, corresponding `dd` element.
@@ -61,6 +50,10 @@ Some elements have critical issues that need to be fixed before they can be conv
   - The `.hidden` class was used for content that would show when editing the content in the old wiki engine, and would not show to a typical reader. More than likely, these should all simply be removed as they are no longer helpful.
   - If the `.hidden` block is a `<div>` which encloses several `<pre>` tags, remove the `<div>` and instead apply the `hidden` class to the `<pre>` blocks within.
   - For all other scenarios, either remove the class or remove the entire element and its contents at your own discretion.
+- `th`/`td`
+  - Table cells may somtimes include lists, codeblocks, and other multiline content. Since Markdown does not allow this, tables with these cell contents cannot be converted.
+  - Separate the table contents into a multi-paragraph strcutre if possible.
+  - Translators: compare the document to the current English locale for an example of how to handle that specific element.
 
 ### Rinse and repeat from the conversion report
 

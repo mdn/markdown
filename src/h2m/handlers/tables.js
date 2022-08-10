@@ -1,4 +1,4 @@
-import { h } from "../h.js";
+import { h, html } from "../h.js";
 
 export const tables = [
   [{ is: "caption" }, (node, t) => t(node)],
@@ -15,36 +15,48 @@ export const tables = [
         "nostripe",
       ],
     },
-    (node, t) =>
-      h(
-        "table",
-        node.children
-          .flatMap((node) =>
-            node.type == "element" &&
-            typeof node.tagName == "string" &&
-            ["thead", "tbody", "tfoot"].includes(node.tagName)
-              ? node.children
-              : node
-          )
-          .filter((node) => node.tagName == "tr")
-          .flatMap((node, i) => t([node], { rowIndex: i }))
-      ),
+    (node, t) => {
+      const children = node.children
+        .flatMap((node) =>
+          node.type == "element" &&
+          typeof node.tagName == "string" &&
+          ["thead", "tbody", "tfoot"].includes(node.tagName)
+            ? node.children
+            : node
+        )
+        .filter((node) => node.tagName == "tr")
+        .flatMap((node, i) => t([node], { rowIndex: i }));
+
+      if (children.some((c) => c.type === "html")) {
+        return html(node);
+      }
+
+      return h("table", children);
+    },
   ],
 
-  ["tr", "tableRow"],
+  [
+    "tr",
+    (node, t) => {
+      const children = t(node.children);
+      return children.some((c) => c.type === "html")
+        ? html(node)
+        : h("tableRow", children);
+    },
+  ],
 
   [
     {
       is: ["th", "td"],
-      canHave: {
-        id: null,
-        scope: null,
-        style: null,
-        dir: null,
-        lang: null,
-      },
+      canHave: ["id", "scope", "style", "dir", "lang", "rowSpan", "colSpan"],
       canHaveClass: "header",
     },
-    (node, t) => h("tableCell", t(node, { shouldWrap: true })),
+    (node, t) => {
+      const { colSpan, rowSpan } = node.properties;
+      if (colSpan > 1 || rowSpan > 1) {
+        return html(node);
+      }
+      return h("tableCell", t(node, { shouldWrap: true }));
+    },
   ],
 ];

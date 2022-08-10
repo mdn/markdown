@@ -125,7 +125,7 @@ export const handlers = [
   [
     {
       is: ["span", "small"],
-      canHave: ["id", "style", "lang", "title"],
+      canHave: ["id", "style", "lang", "title", "dir"],
       canHaveClass: [
         "highlight-span",
         "objectBox",

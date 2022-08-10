@@ -24,6 +24,9 @@ export const commonClasses = [
   "lang",
   "internal",
   "external",
+  (className) => className.startsWith("goog-gtc"),
+  "mw-headline",
+  "editable",
 ];
 
 const STATIC_PHRASING_CONTENT = [

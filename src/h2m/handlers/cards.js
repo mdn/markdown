@@ -1,5 +1,5 @@
 import Gettext from "node-gettext";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -8,23 +8,33 @@ import { h } from "../h.js";
 import { asArray } from "../utils.js";
 import { toText } from "./to-text.js";
 
-const gettextLocalizationMap = (() => {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const require = createRequire(import.meta.url);
+const dirname = new URL(".", import.meta.url);
+const localesPath = new URL(
+  "../../../node_modules/@mdn/yari/markdown/localizations/",
+  dirname
+);
+
+const getLocalizationMap = async () => {
   const getTextDefaultDomainName = "messages";
-  let gtLocalizationMap = new Map();
-  let localesOnFS = fs
-    .readdirSync(path.join(__dirname, "../../localizations"))
-    .map((str) => str.split(".")[0]);
-  localesOnFS.forEach((localeStr) => {
-    const translations = require("../../localizations/" + localeStr + ".json");
+  const gtLocalizationMap = new Map();
+  const localesOnFS = (await fs.readdir(localesPath)).map(
+    (str) => str.split(".")[0]
+  );
+
+  for (const localeStr of localesOnFS) {
+    const translations = JSON.parse(
+      await fs.readFile(new URL(`./${localeStr}.json`, localesPath))
+    );
     const gt = new Gettext();
     gt.addTranslations(localeStr, getTextDefaultDomainName, translations);
     gt.setLocale(localeStr);
     gtLocalizationMap.set(localeStr, gt);
-  });
+  }
+
   return gtLocalizationMap;
-})();
+};
+
+const gettextLocalizationMap = await getLocalizationMap();
 
 export const cards = [
   ...["note", "warning", "callout"].map((className) => [

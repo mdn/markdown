@@ -130,11 +130,12 @@ program
   .argument("[folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
+      const folder = args.folder || "";
       console.info(
         `Starting HTML to Markdown conversion in ${options.mode} mode`
       );
       const documents = Document.findAll({
-        folderSearch: args.folder,
+        folderSearch: folder,
         locales: buildLocaleMap(options.locale),
       });
 
@@ -151,9 +152,7 @@ program
           if (
             doc.isMarkdown ||
             // findAll's folderSearch is fuzzy which we don't want here
-            !doc.metadata.slug
-              .toLowerCase()
-              .startsWith(args.folder.toLowerCase())
+            !doc.metadata.slug.toLowerCase().startsWith(folder.toLowerCase())
           ) {
             continue;
           }

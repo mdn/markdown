@@ -25,10 +25,20 @@ CONTENT_ROOT=../content/files
 
 ## How to use
 
+To run the script, run `yarn h2m <folder> --locale <locale> --mode <mode>`, where `<folder>` is the target folder to convert (leave blank for all folders), `<locale>` is the target locale (default: all), and `<mode>` is the desired operating mode. This will analyze the HTML files within the specified folder and convert them to Markdown. A report file (`md-conversion-problems-report-[Timestamp].md`) will be generated in the root of this repository if there were any elements that could not be converted.
+
+### Modes
+
+- `dry`: Run the conversion script without producing any changes
+- `keep`: Create the Markdown files but do not remove the original HTML files
+- `replace`: Remove the HTML files and replace them with the Markdown files
+
+### Examples
+
 ```sh
 yarn h2m web/http --locale en-US --mode dry
 ```
 
 ```sh
-yarn h2m web/http --locale en-US --mode replace
+yarn h2m --locale fr --mode replace
 ```

@@ -198,7 +198,11 @@ export const handlers = [
     },
     (node, t, { locale = DEFAULT_LOCALE }) =>
       h("link", t(node), {
-        title: node.properties.title || null,
+        title:
+          // Some titles are simply the same as the URL, so don't add them if they are
+          node.properties.title === node.properties.href
+            ? null
+            : node.properties.title || null,
         url: node.properties.href.replace(
           /^((https?:\/\/)?developer\.mozilla\.org)?\/[\w-]+\/docs/,
           `/${locale}/docs`

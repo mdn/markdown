@@ -70,10 +70,14 @@ export const handlers = [
   ...tables,
   ...cards,
 
-  // Reminder: section#Quick_links is a special section for the sidebar and should be ignored
   [
     ["html", "head", "body", "section", "aside", "article"],
     (node, t) => wrap(t(node)),
+  ],
+  [
+    // section#Quick_links is a special section for the sidebar and should be left as HTML
+    { is: "section", has: { id: "Quick_links" } },
+    (node, t) => h("html", toPrettyHTML(node)),
   ],
 
   [
@@ -124,7 +128,7 @@ export const handlers = [
 
   [
     {
-      is: ["span", "small"],
+      is: ["span", "small", "cite"],
       canHave: ["id", "style", "lang", "title", "dir"],
       canHaveClass: [
         "highlight-span",
@@ -188,6 +192,7 @@ export const handlers = [
         "cta",
         "primary",
         "new",
+        "button",
         ...commonClasses,
       ],
     },
@@ -273,6 +278,7 @@ export const handlers = [
       );
     },
   ],
+  [{ is: "kbd" }, (node, t) => h("html", toPrettyHTML(node))],
 
   [
     { is: "pre", canHaveClass: ["eval", "notranslate", "syntaxbox"] },

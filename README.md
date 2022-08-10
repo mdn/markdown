@@ -26,9 +26,9 @@ CONTENT_ROOT=../content/files
 ## How to use
 
 ```sh
-yarn md h2m web/http --locale en-US --mode dry
+yarn h2m web/http --locale en-US --mode dry
 ```
 
 ```sh
-yarn md h2m web/http --locale en-US --mode replace
+yarn h2m web/http --locale en-US --mode replace
 ```

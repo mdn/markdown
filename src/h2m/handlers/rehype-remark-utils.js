@@ -5,8 +5,8 @@ Some have been slightly refactored for our usage and readability
  */
 
 import has from "hast-util-has-property";
-import toText from "hast-util-to-text";
-import phrasing from "mdast-util-phrasing";
+import { toText } from "hast-util-to-text";
+import { phrasing } from "mdast-util-phrasing";
 import trim from "trim-trailing-lines";
 
 import { h } from "../h.js";

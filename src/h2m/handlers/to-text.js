@@ -6,13 +6,11 @@
 import { createRequire } from "module";
 
 import repeat from "repeat-string";
-import findAfter from "unist-util-find-after";
+import { findAfter } from "unist-util-find-after";
+import { convertElement as convert } from "hast-util-is-element";
 
 import { InvalidASTError } from "../utils.js";
 import { matchesQuery } from "./utils.js";
-
-const require = createRequire(import.meta.url);
-const convert = require("hast-util-is-element/convert");
 
 const searchLineFeeds = /\n/g;
 const searchTabOrSpaces = /[\t ]+/g;

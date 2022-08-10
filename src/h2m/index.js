@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import unified from "unified";
+import { unified } from "unified";
 import parseHTML from "rehype-parse";
 import gfm from "remark-gfm";
 import remarkPrettier from "remark-prettier";

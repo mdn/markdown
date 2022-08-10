@@ -26,9 +26,13 @@ const exhaustsProps = (props, required, optional) => {
       for (const [key, value] of Object.entries(keyOrObject)) {
         const valueSet = remaining.get(key);
         if (valueSet) {
-          valueSet.delete(value);
-          if (valueSet.size == 0) {
+          if (value === undefined || value === null) {
             remaining.delete(key);
+          } else {
+            valueSet.delete(value);
+            if (valueSet.size == 0) {
+              remaining.delete(key);
+            }
           }
         }
       }

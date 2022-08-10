@@ -36,7 +36,13 @@ export const tables = [
   [
     {
       is: ["th", "td"],
-      canHave: ["id", "scope", "style", "dir", "lang"],
+      canHave: {
+        id: null,
+        scope: null,
+        style: null,
+        dir: null,
+        lang: null,
+      },
       canHaveClass: "header",
     },
     (node, t) => h("tableCell", t(node, { shouldWrap: true })),

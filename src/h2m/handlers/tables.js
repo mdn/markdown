@@ -4,7 +4,17 @@ export const tables = [
   [{ is: "caption" }, (node, t) => t(node)],
 
   [
-    { is: "table", canHaveClass: "standard-table" },
+    {
+      is: "table",
+      canHave: ["style"],
+      canHaveClass: [
+        "standard-table",
+        "fullwidth-table",
+        "full-width-table",
+        "properties",
+        "nostripe",
+      ],
+    },
     (node, t) =>
       h(
         "table",
@@ -24,15 +34,7 @@ export const tables = [
   ["tr", "tableRow"],
 
   [
-    [
-      (node, options) =>
-        options.rowIndex == 0 && {
-          is: "th",
-          canHaveClass: "header",
-          canHave: { scope: "col" },
-        },
-      (node, options) => options.rowIndex > 0 && "td",
-    ],
+    { is: ["th", "td"], canHave: ["scope", "style"], canHaveClass: "header" },
     (node, t) => h("tableCell", t(node, { shouldWrap: true })),
   ],
 ];

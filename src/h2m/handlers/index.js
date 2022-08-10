@@ -1,6 +1,6 @@
 import trimTrailingLines from "trim-trailing-lines";
 
-import { h } from "../h.js";
+import { h, commonClasses } from "../h.js";
 import { asArray, toPrettyHTML, wrapText } from "../utils.js";
 import { cards } from "./cards.js";
 import { dl } from "./dl.js";
@@ -70,31 +70,63 @@ export const handlers = [
   ...tables,
   ...cards,
 
-  [["html", "head", "body"], (node, t) => wrap(t(node))],
+  // Reminder: section#Quick_links is a special section for the sidebar and should be ignored
+  [
+    ["html", "head", "body", "section", "aside", "article"],
+    (node, t) => wrap(t(node)),
+  ],
 
   [
     {
       is: ["h1", "h2", "h3", "h4", "h5"],
-      canHave: "id",
+      canHave: ["id", "name", "style", "dir"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },
-    (node, t) =>
-      h("heading", t(node, { shouldWrap: true, singleLine: true }), {
-        depth: Number(node.tagName.charAt(1)) || 1,
-      }),
+    (node, t) => {
+      const hasOnlyStrongChild =
+        node.children.length == 1 && node.children[0].tagName == "strong";
+      return h(
+        "heading",
+        t(hasOnlyStrongChild ? node.children[0] : node, {
+          shouldWrap: true,
+          singleLine: true,
+        }),
+        {
+          depth: Number(node.tagName.charAt(1)) || 1,
+        }
+      );
+    },
   ],
 
   [
-    { is: "div", canHaveClass: ["twocolumns", "threecolumns", "noinclude"] },
+    {
+      is: "div",
+      canHave: ["id", "dir", "lang", "style"],
+      canHaveClass: [
+        "callout",
+        "column-container",
+        "column-half",
+        "column-2",
+        "column-4",
+        "column-6",
+        "column-8",
+        "column-10",
+        "column-12",
+        "twocolumns",
+        "threecolumns",
+        "equalColumnHeights",
+        "align-center",
+        ...commonClasses,
+      ],
+    },
     (node, t) => t(node),
   ],
 
   [
     {
       is: ["span", "small"],
-      canHave: "id",
+      canHave: ["id", "style", "lang", "title"],
       canHaveClass: [
-        "pl-s",
         "highlight-span",
         "objectBox",
         "objectBox-string",
@@ -104,12 +136,33 @@ export const handlers = [
         "message-body-wrapper",
         "blob-code-inner",
         "blob-code-marker",
+        "result_box",
+        "hps",
+        "js-about-module-abstr",
+        ...commonClasses,
+        (className) => className.startsWith("lang-"),
       ],
     },
     (node, t) => t(node),
   ],
 
-  [{ is: "p", canHaveClass: ["brush:", "js"] }, "paragraph"],
+  // Ignore any font-altering elements
+  [
+    {
+      is: ["font", "sup", "sub"],
+      canHave: ["color", "face", "style"],
+    },
+    (node, t, opts) => t(node.children),
+  ],
+
+  [
+    {
+      is: "p",
+      canHave: ["id", "style", "dir", "lang", "align"],
+      canHaveClass: ["brush:", "js", "summary"],
+    },
+    "paragraph",
+  ],
   [
     "br",
     (node, t, { shouldWrap, singleLine }) =>
@@ -124,18 +177,36 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["title", "rel", "target"],
-      canHaveClass: ["link-https", "mw-redirect", "external", "external-icon"],
+      canHave: ["title", "rel", "target", "hrefLang", "lang", "style"],
+      canHaveClass: [
+        "link-https",
+        "mw-redirect",
+        "internal",
+        "external",
+        "external-icon",
+        "local-anchor",
+        "cta",
+        "primary",
+        "new",
+        ...commonClasses,
+      ],
     },
-    (node, t) =>
+    (node, t, { locale = DEFAULT_LOCALE }) =>
       h("link", t(node), {
         title: node.properties.title || null,
-        url: node.properties.href,
+        url: node.properties.href.replace(
+          /^((https?:\/\/)?developer\.mozilla\.org)?\/[\w-]+\/docs/,
+          `/${locale}/docs`
+        ),
       }),
   ],
 
   [
-    { is: ["ul", "ol"], canHaveClass: "threecolumns" },
+    {
+      is: ["ul", "ol"],
+      canHave: ["id", "style", "lang", "dir"],
+      canHaveClass: "threecolumns",
+    },
     function list(node, t) {
       const ordered = node.tagName == "ol";
       return h("list", t(node), {
@@ -147,7 +218,11 @@ export const handlers = [
   ],
 
   [
-    { is: "li", canHave: "id" },
+    {
+      is: "li",
+      canHave: ["id", "style", "lang", "dir"],
+      canHaveClass: commonClasses,
+    },
     (node, t) => {
       const content = wrap(t(node));
       return h("listItem", content, { spread: content.length > 1 });
@@ -184,7 +259,7 @@ export const handlers = [
   ],
 
   [
-    "code",
+    { is: ["code", "samp"], canHave: ["style", "title"] },
     (node, t, opts) => {
       const targetNode =
         node.children.length == 1 && node.children[0].tagName == "var"
@@ -227,7 +302,9 @@ export const handlers = [
       {
         is: "pre",
         hasClass,
+        canHave: ["style", "dir"],
         canHaveClass: [
+          ...commonClasses,
           "brush:",
           "brush",
           "example-good",
@@ -235,8 +312,7 @@ export const handlers = [
           "hidden",
           "no-line-numbers",
           "line-numbers",
-          "notranslate",
-          "language-css",
+          `language-${lang}`,
           (className) => className.startsWith("highlight"),
           (className) => className.startsWith("[") && className.endsWith("]"),
         ],
@@ -266,7 +342,7 @@ export const handlers = [
     {
       is: "img",
       has: "src",
-      canHave: ["title", "alt"],
+      canHave: ["title", "alt", "style"],
       canHaveClass: "internal",
     },
     (node) => {
@@ -281,10 +357,22 @@ export const handlers = [
 
   [{ is: "math", canHave: "display" }, (node) => h("html", toPrettyHTML(node))],
 
+  ["hr", (node) => h("thematicBreak")],
+
   ["blockquote", (node, t) => h("blockquote", wrap(t(node)))],
 
-  [{ is: ["i", "em"] }, (node, t) => extractSpacing(h("emphasis", t(node)))],
-  [{ is: ["b", "strong"] }, (node, t) => extractSpacing(h("strong", t(node)))],
+  [
+    { is: ["i", "em"], canHave: ["style", "lang"] },
+    (node, t) => extractSpacing(h("emphasis", t(node))),
+  ],
+  [
+    { is: ["b", "strong", "u"], canHave: ["style", "lang"] },
+    (node, t) => extractSpacing(h("strong", t(node))),
+  ],
+  [
+    { is: ["s", "del"], canHave: ["style", "lang"] },
+    (node, t) => extractSpacing(h("delete", t(node))),
+  ],
 
   [
     "q",

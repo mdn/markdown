@@ -1,4 +1,4 @@
-import toHTML from "hast-util-to-html";
+import { toHtml } from "hast-util-to-html";
 import prettier from "prettier";
 
 export const asArray = (v) => (v ? (Array.isArray(v) ? v : [v]) : []);
@@ -15,7 +15,7 @@ export class InvalidASTError extends Error {
 }
 
 export const toPrettyHTML = (...args) => {
-  const source = toHTML(...args);
+  const source = toHtml(...args);
 
   // Prettier often breaks starting tags but that does not seem to be an issue for
   // our <table> tags for which we are mainly interested in prettier HTML, hence

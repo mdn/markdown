@@ -24,28 +24,20 @@ const wrapNonBlocks = (nodes) => {
   return result;
 };
 
-function prefixDefinitions([first, ...rest]) {
+const prefixDefinitions = ([first, ...rest]) => {
   if (!first) {
     return h("text", "");
   }
 
-  switch (first.type) {
-    case "paragraph":
-      return wrapNonBlocks([
-        { ...first, children: [DEFINITION_START, ...first.children] },
-        ...rest,
-      ]);
-
-    case "text":
-      return wrapNonBlocks([
-        { ...first, value: DEFINITION_PREFIX + first.value },
-        ...rest,
-      ]);
-
-    default:
-      return h("paragraph", [DEFINITION_START, first, ...rest]);
+  if (first.type === "paragaph") {
+    return wrapNonBlocks([
+      { ...first, children: [DEFINITION_START, ...first.children] },
+      ...rest,
+    ]);
   }
-}
+
+  return h("paragraph", [DEFINITION_START, first, ...rest]);
+};
 
 const toDefinitionItem = (node, terms, definitions) =>
   h(

@@ -1,11 +1,39 @@
 import { asArray, InvalidASTError } from "./utils.js";
 
+export const commonClasses = [
+  "noinclude",
+  "summary",
+  "seoSummary",
+  "pl-s",
+  "tlid-translation",
+  "translation",
+  "subtitle",
+  "short_text",
+  "comment",
+  "unicode",
+  "nowiki",
+  "notranslate",
+  "text",
+  "learnmore",
+  "section",
+  "row",
+  "topicpage-table",
+  "offscreen",
+  "smaller",
+  "larger",
+  "lang",
+  "internal",
+  "external",
+];
+
 const STATIC_PHRASING_CONTENT = [
   "text",
   "emphasis",
   "strong",
+  "underline",
   "delete",
   "html",
+  "code",
   "inlineCode",
   "break",
   "image",
@@ -14,7 +42,12 @@ const STATIC_PHRASING_CONTENT = [
   "footnoteReference",
 ];
 
-const PHRASING_CONTENT = [...STATIC_PHRASING_CONTENT, "link", "linkReference"];
+const PHRASING_CONTENT = [
+  ...STATIC_PHRASING_CONTENT,
+  "paragraph",
+  "link",
+  "linkReference",
+];
 
 const BLOCK_CONTENT = [
   "paragraph",
@@ -49,6 +82,7 @@ const CHILDREN_TYPES = {
   footnoteDefinition: BLOCK_CONTENT,
   emphasis: PHRASING_CONTENT,
   strong: PHRASING_CONTENT,
+  underline: PHRASING_CONTENT,
   delete: PHRASING_CONTENT,
   link: STATIC_PHRASING_CONTENT,
   linkReference: STATIC_PHRASING_CONTENT,

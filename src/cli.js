@@ -115,7 +115,6 @@ program
   .disableGlobalOption("--silent")
   .cast(false)
 
-  .command("h2m", "Convert HTML to Markdown")
   .option("--mode <mode>", "Mode to be run in", {
     default: "keep",
     validator: ["dry", "keep", "replace"],

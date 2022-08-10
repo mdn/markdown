@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import unified from "unified";
+import { unified } from "unified";
 import parseHTML from "rehype-parse";
 import gfm from "remark-gfm";
 import remarkPrettier from "remark-prettier";
@@ -19,6 +19,9 @@ const getTransformProcessor = (options) =>
     .use(remarkPrettier, {
       report: false,
       options: { embeddedLanguageFormatting: "off" },
+    })
+    .use({
+      settings: { emphasis: "_" },
     });
 
 export async function h2m(html, { printAST, locale } = {}) {

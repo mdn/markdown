@@ -27,62 +27,84 @@ const gettextLocalizationMap = (() => {
 })();
 
 export const cards = [
-  ...["note", "warning"].map((className) => [
-    (node, { locale = DEFAULT_LOCALE }) => {
-      const defaultLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      let currentLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      if (gettextLocalizationMap.has(locale)) {
-        currentLocaleGt = gettextLocalizationMap.get(locale);
-      }
-      if (!(node.properties.className || []).some((c) => c == className)) {
-        return false;
-      }
-      if (!node.children || !node.children[0]) {
-        return false;
-      }
-      const [child] = node.children;
-      if (!child.children || !child.children[0]) {
-        return false;
-      }
-      const grandChild = child.children[0];
-      return (
-        grandChild.tagName == "strong" &&
-        (toText(grandChild) ==
-          currentLocaleGt.gettext("card_" + className + "_label") ||
-          toText(grandChild) ==
-            defaultLocaleGt.gettext("card_" + className + "_label"))
-      );
+  ...["note", "warning", "callout"].map((className) => [
+    {
+      is: ["div", "p"],
+      hasClass: className,
+      canHaveClass: ["blockIndicator"],
     },
     (node, t, { locale = DEFAULT_LOCALE }) => {
-      let gt = gettextLocalizationMap.get(DEFAULT_LOCALE);
+      const defaultLocaleGt = gettextLocalizationMap.get(DEFAULT_LOCALE);
+      let gt = defaultLocaleGt;
       if (gettextLocalizationMap.has(locale)) {
         gt = gettextLocalizationMap.get(locale);
       }
+
+      let children = node.children;
+
+      if (children.length == 1 && children[0].tagName == "p") {
+        // If note is surrounded by paragraph tag, use its contents
+        children = children[0].children;
+      }
+
+      const labelText = [
+        gt.gettext("card_" + className + "_label"),
+        defaultLocaleGt.gettext("card_" + className + "_label"),
+      ];
+
+      const firstChild = children[0];
+
+      let childrenToAdd = [h("text", " "), ...asArray(t(children))];
+
+      if (firstChild) {
+        if (firstChild.tagName == "strong") {
+          if (labelText.includes(toText(firstChild).trim())) {
+            // First child is already the proper label
+            childrenToAdd = asArray(t(children.slice(1)));
+          } else if (labelText.includes(toText(firstChild).trim() + ":")) {
+            // The colon is outside of the first child
+            childrenToAdd = [
+              h("text", " "),
+              ...asArray(
+                t([
+                  {
+                    ...children[1],
+                    value: children[1].value.replace(/^:\s+/, " "),
+                  },
+                  ...children.slice(2),
+                ])
+              ),
+            ];
+          } else if (
+            firstChild.value &&
+            labelText.some((t) => firstChild.value.startsWith(t))
+          ) {
+            // No strong tag, but the text is preceded with the proper label
+            childrenToAdd = [
+              h("text", " "),
+              ...asArray(
+                t([
+                  {
+                    ...children[0],
+                    value: children[0].value.replace(
+                      new RegExp(`^${labelText.join("|")} `, "g"),
+                      ""
+                    ),
+                  },
+                  ...children.slice(1),
+                ])
+              ),
+            ];
+          }
+        }
+      }
+
       return h("blockquote", [
         h("paragraph", [
-          h("strong", [h("text", gt.gettext("card_" + className + "_label"))]),
-          ...asArray(t(node.children[0].children.slice(1))),
+          h("strong", [h("text", labelText[0])]),
+          ...childrenToAdd,
         ]),
-        ...asArray(t(node.children.slice(1))),
       ]);
     },
   ]),
-
-  [
-    (node) =>
-      node.tagName == "div" &&
-      (node.properties.className || "").includes("callout"),
-    (node, t, { locale = DEFAULT_LOCALE }) => {
-      let gt = gettextLocalizationMap.get(DEFAULT_LOCALE);
-      if (gettextLocalizationMap.has(locale)) {
-        gt = gettextLocalizationMap.get(locale);
-      }
-      return h("blockquote", [
-        h("paragraph", [
-          h("strong", [h("text", gt.gettext("card_callout_label"))]),
-        ]),
-        ...asArray(t(node.children)),
-      ]);
-    },
-  ],
 ];

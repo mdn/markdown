@@ -29,7 +29,9 @@ const exhaustsProps = (props, required, optional) => {
           if (value === undefined || value === null) {
             remaining.delete(key);
           } else {
-            valueSet.delete(value);
+            for (const v of Array.isArray(value) ? value : [value]) {
+              valueSet.delete(v);
+            }
             if (valueSet.size == 0) {
               remaining.delete(key);
             }

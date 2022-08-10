@@ -1,4 +1,4 @@
-import { asArray, InvalidASTError } from "./utils.js";
+import { asArray, InvalidASTError, toPrettyHTML } from "./utils.js";
 
 export const commonClasses = [
   "noinclude",
@@ -115,4 +115,8 @@ export function h(type, childrenOrValue, props) {
   } else {
     return mdNode;
   }
+}
+
+export function html(value) {
+  return h("html", toPrettyHTML(value));
 }

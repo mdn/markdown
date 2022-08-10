@@ -1,7 +1,7 @@
 import trimTrailingLines from "trim-trailing-lines";
 
-import { h, commonClasses } from "../h.js";
-import { asArray, toPrettyHTML, wrapText } from "../utils.js";
+import { h, commonClasses, html } from "../h.js";
+import { asArray, wrapText } from "../utils.js";
 import { cards } from "./cards.js";
 import { dl } from "./dl.js";
 import { tables } from "./tables.js";
@@ -77,7 +77,7 @@ export const handlers = [
   [
     // section#Quick_links is a special section for the sidebar and should be left as HTML
     { is: "section", has: { id: "Quick_links" } },
-    (node, t) => h("html", toPrettyHTML(node)),
+    (node, t) => html(node),
   ],
 
   [
@@ -170,11 +170,7 @@ export const handlers = [
   [
     "br",
     (node, t, { shouldWrap, singleLine }) =>
-      shouldWrap
-        ? singleLine
-          ? h("html", toPrettyHTML(node))
-          : h("break")
-        : h("text", "\n"),
+      shouldWrap ? (singleLine ? html(node) : h("break")) : h("text", "\n"),
   ],
 
   [
@@ -282,7 +278,7 @@ export const handlers = [
       );
     },
   ],
-  [{ is: "kbd" }, (node, t) => h("html", toPrettyHTML(node))],
+  [{ is: "kbd" }, (node, t) => html(node)],
 
   [
     { is: "pre", canHaveClass: ["eval", "notranslate", "syntaxbox"] },
@@ -365,7 +361,7 @@ export const handlers = [
     },
   ],
 
-  [{ is: "math", canHave: "display" }, (node) => h("html", toPrettyHTML(node))],
+  [{ is: "math", canHave: "display" }, (node) => html(node)],
 
   ["hr", (node) => h("thematicBreak")],
 

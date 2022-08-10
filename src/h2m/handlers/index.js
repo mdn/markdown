@@ -75,6 +75,29 @@ export const handlers = [
     (node, t) => wrap(t(node)),
   ],
   [
+    // A div with the hidden class containing a header and <pre> tags should have the class propogate down and the header removed
+    (node) =>
+      node.tagName == "div" &&
+      node.children.every(
+        (child) =>
+          child.type == "element" &&
+          ["h1", "h2", "h3", "h4", "h5", "pre"].includes(child.tagName)
+      ),
+    (node, t) => {
+      const children = node.children
+        .filter((child) => child.tagName === "pre")
+        .map((child) => ({
+          ...child,
+          properties: {
+            ...child.properties,
+            className: [...(child.properties.className || []), "hidden"],
+          },
+        }));
+
+      return t(children);
+    },
+  ],
+  [
     // section#Quick_links is a special section for the sidebar and should be left as HTML
     { is: "section", has: { id: "Quick_links" } },
     (node, t) => html(node),

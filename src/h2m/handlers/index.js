@@ -200,7 +200,7 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["title", "rel", "target", "hrefLang", "lang", "style"],
+      canHave: ["name", "title", "rel", "target", "hrefLang", "lang", "style"],
       canHaveClass: [
         "link-https",
         "mw-redirect",

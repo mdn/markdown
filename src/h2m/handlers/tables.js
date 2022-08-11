@@ -36,7 +36,7 @@ export const tables = [
   ],
 
   [
-    "tr",
+    { is: "tr", canHave: ["id", "scope", "style", "dir", "lang"] },
     (node, t) => {
       const children = t(node.children);
       return children.some((c) => c.type === "html")

@@ -46,10 +46,9 @@ There are a number of elements you will often see in the "unhandled elements lis
   - The conversion script has strict expectations for the contents of a `dl` element. The first child element should be a `dt` element, and for every `dt` element, there should be **one**, and only one, corresponding `dd` element.
   - If the number of `dt` and `dd` elements are not equal, the script cannot convert them.
   - Remove any stray `dt` elements, and combine sibling `dd` elements together using `<br />` tags, then try again.
-- `*.hidden` (except for `pre.hidden`)
+- `*.hidden`
   - The `.hidden` class was used for content that would show when editing the content in the old wiki engine, and would not show to a typical reader. More than likely, these should all simply be removed as they are no longer helpful.
-  - If the `.hidden` block is a `<div>` which encloses several `<pre>` tags, remove the `<div>` and instead apply the `hidden` class to the `<pre>` blocks within.
-  - For all other scenarios, either remove the class or remove the entire element and its contents at your own discretion.
+  - Either remove the class or remove the entire element and its contents at your own discretion.
 - `th`/`td`
   - Table cells may somtimes include lists, codeblocks, and other multiline content. Since Markdown does not allow this, tables with these cell contents cannot be converted.
   - Separate the table contents into a multi-paragraph strcutre if possible.

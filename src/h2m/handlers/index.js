@@ -81,7 +81,7 @@ export const handlers = [
       node.children.every(
         (child) =>
           child.type == "element" &&
-          ["h1", "h2", "h3", "h4", "h5", "pre"].includes(child.tagName)
+          ["h1", "h2", "h3", "h4", "h5", "h6", "pre"].includes(child.tagName)
       ),
     (node, t) => {
       const children = node.children

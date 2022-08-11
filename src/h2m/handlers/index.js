@@ -131,6 +131,7 @@ export const handlers = [
       canHave: ["id", "dir", "lang", "style"],
       canHaveClass: [
         "callout",
+        "container",
         "column-container",
         "column-half",
         "column-2",

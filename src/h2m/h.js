@@ -29,6 +29,8 @@ export const commonClasses = [
   "mw-headline",
   "editable",
   "alt-edited",
+  "Unicode",
+  "attTitle",
 ];
 
 const STATIC_PHRASING_CONTENT = [

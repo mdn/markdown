@@ -176,7 +176,7 @@ export const handlers = [
   // Ignore any font-altering elements
   [
     {
-      is: ["font", "sup", "sub"],
+      is: ["font", "sup", "sub", "small", "large"],
       canHave: ["color", "face"],
     },
     (node, t, opts) => t(node.children),
@@ -335,6 +335,7 @@ export const handlers = [
       `bruh:${lang};`,
       lang,
       lang + ";",
+      `lang-${lang}`,
       `language-${lang}`,
     ].map((hasClass) => [
       {

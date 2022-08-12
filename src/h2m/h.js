@@ -1,7 +1,7 @@
 import { asArray, InvalidASTError, toPrettyHTML } from "./utils.js";
 
 export const commonAllowed = {
-  properties: ["id", "name", "style", "lang", "dir", "title", "align"],
+  properties: ["id", "name", "style", "lang", "dir", "title", "align", "cite"],
   classes: [
     "noinclude",
     "summary",
@@ -65,7 +65,26 @@ export const commonAllowed = {
     "toctext",
     "Normal",
     "prettyprint",
+    "prettyprinted",
     "style-wrap",
+    "boxed",
+    "translate-rendered",
+    "text-content",
+    "lwrap",
+    "rwrap",
+    "callout-box",
+    "deki-ns",
+    "current",
+    "first",
+    "last",
+    "linkification-ext",
+    "linkification-int",
+    "widgeted",
+    "question-hyperlink",
+    "html5",
+    "obsoleteElement",
+    "deprecatedElement",
+    "nonStdElement",
   ],
 };
 

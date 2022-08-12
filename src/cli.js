@@ -144,11 +144,10 @@ program
   .argument("[folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
-      let folder = args.folder || "";
-      if (folder.length !== 0) { // if folder is specified, find folder only
+      let folder = (args.folder || "").replace(/\\|\//g, path.sep); // correct path separator
+      if (folder.length !== 0 && !folder.endsWith(path.sep)) { // if folder is specified, find folder only
         folder += path.sep;
       }
-      folder = folder.replace(/\\|\//g, path.sep); // correct path separator
       console.info(
         `Starting HTML to Markdown conversion in ${options.mode} mode`
       );

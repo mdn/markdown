@@ -94,7 +94,7 @@ function saveProblemsReport(problems) {
     }
   }
   if (problemCount > 0) {
-    const reportFileName = `md-conversion-problems-report-${now.toISOString()}.md`;
+    const reportFileName = `md-conversion-problems-report-${now.toISOString().replace(/:/g, "_")}.md`;
     console.info(
       `Could not automatically convert ${problemCount} elements. Saving report to ${reportFileName}`
     );

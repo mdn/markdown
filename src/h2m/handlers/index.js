@@ -341,6 +341,8 @@ export const handlers = [
     [
       "brush:" + lang,
       `brush:${lang};`,
+      "bruh:" + lang,
+      `bruh:${lang};`,
       lang,
       lang + ";",
       `language-${lang}`,
@@ -358,7 +360,7 @@ export const handlers = [
           "no-line-numbers",
           "line-numbers",
           `language-${lang}`,
-          (className) => className.startsWith("highlight"),
+          (className) => className.includes("highlight"),
           (className) => className.startsWith("[") && className.endsWith("]"),
         ],
       },

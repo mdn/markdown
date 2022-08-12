@@ -101,8 +101,8 @@ export const matchesQuery = (node, query, options) => {
   return (
     exhaustsProps(props, query.has, query.canHave) &&
     exhaustsClasses(asArray(className), asArray(query.hasClass), [
-      ...(query.canHaveClass || []),
       ...commonClasses,
+      ...(query.canHaveClass || []),
     ])
   );
 };

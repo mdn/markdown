@@ -62,6 +62,8 @@ export const commonClasses = [
   "deki-transform",
   "toctext",
   "Normal",
+  "prettyprint",
+  "style-wrap",
 ];
 
 const STATIC_PHRASING_CONTENT = [

@@ -203,8 +203,9 @@ export const handlers = [
   [
     {
       is: "a",
-      has: "href",
       canHave: [
+        "href",
+        "id",
         "name",
         "title",
         "rel",
@@ -228,17 +229,19 @@ export const handlers = [
       ],
     },
     (node, t, { locale = DEFAULT_LOCALE }) =>
-      h("link", t(node), {
-        title:
-          // Some titles are simply the same as the URL, so don't add them if they are
-          node.properties.title === node.properties.href
-            ? null
-            : node.properties.title || null,
-        url: node.properties.href.replace(
-          /^((https?:\/\/)?developer\.mozilla\.org)?\/[\w-]+\/docs/,
-          `/${locale}/docs`
-        ),
-      }),
+      node.properties.href && node.properties.href !== "#"
+        ? h("link", t(node), {
+            title:
+              // Some titles are simply the same as the URL, so don't add them if they are
+              node.properties.title === node.properties.href
+                ? null
+                : node.properties.title || null,
+            url: node.properties.href.replace(
+              /^((https?:\/\/)?developer\.mozilla\.org)?\/[\w-]+\/docs/,
+              `/${locale}/docs`
+            ),
+          })
+        : h("paragraph", t(node)),
   ],
 
   [

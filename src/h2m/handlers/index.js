@@ -1,6 +1,6 @@
 import trimTrailingLines from "trim-trailing-lines";
 
-import { h, commonClasses, html } from "../h.js";
+import { h, html } from "../h.js";
 import { asArray, wrapText } from "../utils.js";
 import { cards } from "./cards.js";
 import { dl } from "./dl.js";
@@ -74,7 +74,6 @@ export const handlers = [
     {
       is: ["html", "head", "body", "section", "aside", "article"],
       canHave: ["id"],
-      canHaveClass: commonClasses,
     },
     (node, t) => wrap(t(node)),
   ],
@@ -148,7 +147,6 @@ export const handlers = [
         "threecolumns",
         "equalColumnHeights",
         "align-center",
-        ...commonClasses,
       ],
     },
     (node, t) => t(node),
@@ -171,7 +169,6 @@ export const handlers = [
         "result_box",
         "hps",
         "js-about-module-abstr",
-        ...commonClasses,
         (className) => className.startsWith("lang-"),
       ],
     },
@@ -217,7 +214,6 @@ export const handlers = [
         "primary",
         "new",
         "button",
-        ...commonClasses,
       ],
     },
     (node, t, { locale = DEFAULT_LOCALE }) =>
@@ -238,7 +234,7 @@ export const handlers = [
     {
       is: ["ul", "ol"],
       canHave: ["id", "style", "lang", "dir"],
-      canHaveClass: ["threecolumns", ...commonClasses],
+      canHaveClass: ["threecolumns"],
     },
     function list(node, t) {
       const ordered = node.tagName == "ol";
@@ -254,7 +250,6 @@ export const handlers = [
     {
       is: "li",
       canHave: ["id", "style", "lang", "dir"],
-      canHaveClass: commonClasses,
     },
     (node, t) => {
       const content = wrap(t(node));
@@ -338,7 +333,6 @@ export const handlers = [
         hasClass,
         canHave: ["style", "dir"],
         canHaveClass: [
-          ...commonClasses,
           "brush:",
           "brush",
           "example-good",

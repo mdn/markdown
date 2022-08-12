@@ -108,7 +108,7 @@ export const handlers = [
 
   [
     {
-      is: ["h1", "h2", "h3", "h4", "h5"],
+      is: ["h1", "h2", "h3", "h4", "h5", "h6"],
       canHave: ["id", "name", "style", "dir"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },

@@ -49,6 +49,18 @@ export const commonClasses = [
   "tuto_type",
   "tuto_details",
   "tutospecial",
+  "hideAnswer",
+  "chapter-audio",
+  "chapter-portrait",
+  "chapter-portrait-img",
+  "chapter-justtext",
+  "chapter",
+  "chapters",
+  "highlight",
+  "pull-aside",
+  "moreinfo",
+  "deki-transform",
+  "toctext",
 ];
 
 const STATIC_PHRASING_CONTENT = [

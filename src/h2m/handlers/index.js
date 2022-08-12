@@ -81,6 +81,7 @@ export const handlers = [
     // A div with the hidden class containing a header and <pre> tags should have the class propogate down and the header removed
     (node) =>
       node.tagName == "div" &&
+      node.properties.className?.includes("hidden") &&
       node.children.every(
         (child) =>
           child.type == "element" &&

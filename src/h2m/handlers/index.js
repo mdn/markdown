@@ -263,7 +263,7 @@ export const handlers = [
   [
     {
       is: "li",
-      canHave: ["id", "style", "lang", "dir"],
+      canHave: ["id", "style", "lang", "dir", "dataDefaultState"],
     },
     (node, t) => {
       const content = wrap(t(node));

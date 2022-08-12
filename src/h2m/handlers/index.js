@@ -71,7 +71,11 @@ export const handlers = [
   ...cards,
 
   [
-    ["html", "head", "body", "section", "aside", "article"],
+    {
+      is: ["html", "head", "body", "section", "aside", "article"],
+      canHave: ["id"],
+      canHaveClass: commonClasses,
+    },
     (node, t) => wrap(t(node)),
   ],
   [
@@ -234,7 +238,7 @@ export const handlers = [
     {
       is: ["ul", "ol"],
       canHave: ["id", "style", "lang", "dir"],
-      canHaveClass: "threecolumns",
+      canHaveClass: ["threecolumns", ...commonClasses],
     },
     function list(node, t) {
       const ordered = node.tagName == "ol";

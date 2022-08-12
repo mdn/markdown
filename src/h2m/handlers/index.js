@@ -148,6 +148,7 @@ export const handlers = [
         "threecolumns",
         "equalColumnHeights",
         "align-center",
+        "originaldocinfo",
       ],
     },
     (node, t) => t(node),
@@ -155,7 +156,7 @@ export const handlers = [
 
   [
     {
-      is: ["span", "small", "cite", "nobr"],
+      is: ["span", "small", "cite", "nobr", "figure"],
       canHave: ["id", "style", "lang", "title", "dir"],
       canHaveClass: [
         "highlight-span",
@@ -314,7 +315,10 @@ export const handlers = [
   [{ is: "kbd" }, (node, t) => html(node)],
 
   [
-    { is: "pre", canHaveClass: ["eval", "notranslate", "syntaxbox"] },
+    {
+      is: "pre",
+      canHaveClass: ["eval", "syntaxbox", "twopartsyntaxbox"],
+    },
     (node, t, opts) => code(node, opts),
   ],
 

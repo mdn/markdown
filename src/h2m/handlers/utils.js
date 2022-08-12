@@ -1,5 +1,5 @@
 import { asArray, toSelector } from "../utils.js";
-import { commonClasses } from "../h.js";
+import { commonAllowed } from "../h.js";
 
 const exhaustsProps = (props, required, optional) => {
   const remaining = new Map(
@@ -99,9 +99,12 @@ export const matchesQuery = (node, query, options) => {
 
   const { className, ...props } = node.properties;
   return (
-    exhaustsProps(props, query.has, query.canHave) &&
+    exhaustsProps(props, query.has, [
+      ...commonAllowed.properties,
+      ...(query.canHave || []),
+    ]) &&
     exhaustsClasses(asArray(className), asArray(query.hasClass), [
-      ...commonClasses,
+      ...commonAllowed.classes,
       ...(query.canHaveClass || []),
     ])
   );

@@ -73,7 +73,6 @@ export const handlers = [
   [
     {
       is: ["html", "head", "body", "section", "aside", "article"],
-      canHave: ["id"],
     },
     (node, t) => wrap(t(node)),
   ],
@@ -110,7 +109,6 @@ export const handlers = [
   [
     {
       is: ["h1", "h2", "h3", "h4", "h5", "h6"],
-      canHave: ["id", "name", "style", "dir"],
       canHaveClass: ["example", "name", "highlight-spanned"],
     },
     (node, t) => {
@@ -132,7 +130,6 @@ export const handlers = [
   [
     {
       is: "div",
-      canHave: ["id", "dir", "lang", "style"],
       canHaveClass: [
         "callout",
         "container",
@@ -157,7 +154,6 @@ export const handlers = [
   [
     {
       is: ["span", "small", "cite", "nobr", "figure"],
-      canHave: ["id", "style", "lang", "title", "dir"],
       canHaveClass: [
         "highlight-span",
         "objectBox",
@@ -181,7 +177,7 @@ export const handlers = [
   [
     {
       is: ["font", "sup", "sub"],
-      canHave: ["color", "face", "style"],
+      canHave: ["color", "face"],
     },
     (node, t, opts) => t(node.children),
   ],
@@ -189,7 +185,6 @@ export const handlers = [
   [
     {
       is: "p",
-      canHave: ["id", "style", "dir", "lang", "align"],
       canHaveClass: ["brush:", "js", "summary"],
     },
     "paragraph",
@@ -203,18 +198,7 @@ export const handlers = [
   [
     {
       is: "a",
-      canHave: [
-        "href",
-        "id",
-        "name",
-        "title",
-        "rel",
-        "target",
-        "hrefLang",
-        "lang",
-        "style",
-        "dir",
-      ],
+      canHave: ["href", "rel", "target", "hrefLang"],
       canHaveClass: [
         "link-https",
         "mw-redirect",
@@ -247,7 +231,6 @@ export const handlers = [
   [
     {
       is: ["ul", "ol"],
-      canHave: ["id", "style", "lang", "dir"],
       canHaveClass: ["threecolumns"],
     },
     function list(node, t) {
@@ -263,7 +246,7 @@ export const handlers = [
   [
     {
       is: "li",
-      canHave: ["id", "style", "lang", "dir", "dataDefaultState"],
+      canHave: ["dataDefaultState"],
     },
     (node, t) => {
       const content = wrap(t(node));
@@ -301,7 +284,7 @@ export const handlers = [
   ],
 
   [
-    { is: ["code", "samp"], canHave: ["style", "title"] },
+    { is: ["code", "samp"] },
     (node, t, opts) => {
       const targetNode =
         node.children.length == 1 && node.children[0].tagName == "var"
@@ -357,7 +340,6 @@ export const handlers = [
       {
         is: "pre",
         hasClass,
-        canHave: ["style", "dir"],
         canHaveClass: [
           "brush:",
           "brush",
@@ -396,7 +378,7 @@ export const handlers = [
     {
       is: "img",
       has: "src",
-      canHave: ["title", "alt", "style"],
+      canHave: ["alt"],
       canHaveClass: "internal",
     },
     (node) => {
@@ -415,18 +397,12 @@ export const handlers = [
 
   ["blockquote", (node, t) => h("blockquote", wrap(t(node)))],
 
+  [{ is: ["i", "em"] }, (node, t) => extractSpacing(h("emphasis", t(node)))],
   [
-    { is: ["i", "em"], canHave: ["style", "lang"] },
-    (node, t) => extractSpacing(h("emphasis", t(node))),
-  ],
-  [
-    { is: ["b", "strong", "u"], canHave: ["style", "lang"] },
+    { is: ["b", "strong", "u"] },
     (node, t) => extractSpacing(h("strong", t(node))),
   ],
-  [
-    { is: ["s", "del"], canHave: ["style", "lang"] },
-    (node, t) => extractSpacing(h("delete", t(node))),
-  ],
+  [{ is: ["s", "del"] }, (node, t) => extractSpacing(h("delete", t(node)))],
 
   [
     "q",
@@ -463,5 +439,5 @@ export const handlers = [
 
   ["var", (node, t) => h("emphasis", t(node))],
   ["dfn", (node, t) => h("emphasis", t(node))],
-  [{ is: "abbr", canHave: "title" }, (node, t) => t(node)],
+  [{ is: "abbr" }, (node, t) => t(node)],
 ];

@@ -1,4 +1,6 @@
 import fs from "fs";
+import path from "path";
+import os from "os";
 import fm from "front-matter";
 import { createRequire } from "module";
 import chalk from "chalk";
@@ -108,6 +110,18 @@ function buildLocaleMap(locale) {
   return localesMap;
 }
 
+// opposite of slugToFolder
+function folderToSlugLC(folder) {
+  return folder
+    .slice(0, -1) // remove the trailing slash
+    .replace(/_question_/g, "?")
+    .replace(/_colon_/g, ":")
+    .replace(/_doublecolon_/g, "::")
+    .replace(/_star_/g, "*")
+    .replace(/\\/g, "/") // replace windows path separator
+    .toLowerCase();
+}
+
 program
   .bin("yarn md")
   .name("md")
@@ -130,12 +144,17 @@ program
   .argument("[folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
-      const folder = args.folder || "";
+      let folder = args.folder || "";
+      if (folder.length !== 0) { // if folder is specified, find folder only
+        folder += path.sep;
+      }
+      folder = folder.replace(/\\|\//g, path.sep); // correct path separator
       console.info(
         `Starting HTML to Markdown conversion in ${options.mode} mode`
       );
       const documents = Document.findAll({
-        folderSearch: folder,
+        // replace '\' with '\\' to make this regexp works on Windows
+        folderSearch: os.platform() === "win32" ? folder.replace(/\\/g, "\\\\") : folder,
         locales: buildLocaleMap(options.locale),
       });
 
@@ -145,6 +164,8 @@ program
       );
       progressBar.start(documents.count);
 
+      const slugPrefixLC = folderToSlugLC(folder);
+
       const problems = new Map();
       try {
         for (let doc of documents.iter()) {
@@ -152,7 +173,7 @@ program
           if (
             doc.isMarkdown ||
             // findAll's folderSearch is fuzzy which we don't want here
-            !doc.metadata.slug.toLowerCase().startsWith(folder.toLowerCase())
+            !doc.metadata.slug.toLowerCase().startsWith(slugPrefixLC)
           ) {
             continue;
           }

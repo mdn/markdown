@@ -49,7 +49,7 @@ export const tables = [
     {
       is: ["th", "td"],
       canHave: ["id", "scope", "style", "dir", "lang", "rowSpan", "colSpan"],
-      canHaveClass: "header",
+      canHaveClass: ["header"],
     },
     (node, t) => {
       const { colSpan, rowSpan } = node.properties;

@@ -10,7 +10,7 @@ To perform Markdown conversion, you must:
 - Have a GitHub account (it's free!)
 - Have a local copy of [`mdn/markdown`](https://github.com/mdn/markdown): the conversion tool is located in this repo
   - See [README](https://github.com/mdn/markdown/blob/main/README.md) for setup instructions
-  - This script was originally in `mdn/yari`, but has been forked into its own repository and actively maintained there. **DO NOT USE THE CONVERSION SCRIPT WITHIN YARI**
+  - This script was originally in `mdn/yari`, but it has been forked into this repository for easier maintenance and sunsetting when it is no longer needed
 - Have a local copy of [`mdn/content`](https://github.com/mdn/content) and/or [`mdn/translated-content`](https://github.com/mdn/translated-content)
   - `mdn/content` is needed for en-US, whereas `mdn/translated-content` is for all other locales
 

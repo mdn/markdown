@@ -56,7 +56,7 @@ const toDefinitionItem = (node, terms, definitions) =>
   );
 
 export const dl = [
-  "dl",
+  { is: "dl", canHave: ["style", "id", "lang", "dir"] },
   (node, t) => {
     const children = [];
     let terms = [];

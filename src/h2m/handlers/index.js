@@ -338,7 +338,13 @@ export const handlers = [
     "example-bad",
   ].flatMap((lang) =>
     // shows up with/without semicolon
-    ["brush:" + lang, `brush:${lang};`, lang, lang + ";"].map((hasClass) => [
+    [
+      "brush:" + lang,
+      `brush:${lang};`,
+      lang,
+      lang + ";",
+      `language-${lang}`,
+    ].map((hasClass) => [
       {
         is: "pre",
         hasClass,

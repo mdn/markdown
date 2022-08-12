@@ -155,7 +155,7 @@ export const handlers = [
 
   [
     {
-      is: ["span", "small", "cite"],
+      is: ["span", "small", "cite", "nobr"],
       canHave: ["id", "style", "lang", "title", "dir"],
       canHaveClass: [
         "highlight-span",
@@ -203,7 +203,16 @@ export const handlers = [
     {
       is: "a",
       has: "href",
-      canHave: ["name", "title", "rel", "target", "hrefLang", "lang", "style"],
+      canHave: [
+        "name",
+        "title",
+        "rel",
+        "target",
+        "hrefLang",
+        "lang",
+        "style",
+        "dir",
+      ],
       canHaveClass: [
         "link-https",
         "mw-redirect",
@@ -324,6 +333,7 @@ export const handlers = [
     "glsl",
     "python",
     "sql",
+    "idl",
     "example-good",
     "example-bad",
   ].flatMap((lang) =>

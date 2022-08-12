@@ -67,7 +67,7 @@ export const cards = [
       let childrenToAdd = [h("text", " "), ...asArray(t(children))];
 
       if (firstChild) {
-        if (firstChild.tagName == "strong") {
+        if (["strong", "b", "em", "i"].includes(firstChild.tagName)) {
           if (labelText.includes(toText(firstChild).trim())) {
             // First child is already the proper label
             childrenToAdd = asArray(t(children.slice(1)));

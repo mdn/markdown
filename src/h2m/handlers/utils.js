@@ -83,7 +83,7 @@ export const matchesQuery = (node, query, options) => {
   }
 
   if (typeof query == "string") {
-    return query == toSelector(node);
+    return matchesQuery(node, { is: query }, options);
   }
 
   if (typeof query !== "object") {

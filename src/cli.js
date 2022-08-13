@@ -127,6 +127,14 @@ program
     default: "all",
     validator: Array.from(VALID_LOCALES.values()).concat("all"),
   })
+  .option(
+    "--skip-problems",
+    "Skip saving files with problems (with `keep` or `replace` mode)",
+    {
+      default: false,
+      validator: program.BOOLEAN,
+    }
+  )
   .argument("[folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
@@ -171,6 +179,10 @@ program
               invalid,
               unhandled,
             });
+
+            if (options.skipProblems) {
+              continue;
+            }
           }
 
           if (options.mode == "replace" || options.mode == "keep") {

@@ -37,10 +37,22 @@ We recommend reading the [conversion guide](./conversion-guide.md) for a full tu
 
 ### Examples
 
+To perform a test run of the conversion for the `web/http` folder of the English locale:
+
 ```sh
 yarn h2m web/http --locale en-US --mode dry
 ```
 
+To perform a conversion of all French locale files:
+
 ```sh
 yarn h2m --locale fr --mode replace
+```
+
+### `--skip-problems`
+
+To speed up conversion, you can specify a `--skip-problems` argument to skip conversion of any files containing conversion issues:
+
+```sh
+yarn h2m conflicting/web --locale de --mode replace --skip-problems
 ```

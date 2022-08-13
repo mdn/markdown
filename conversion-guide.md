@@ -68,6 +68,10 @@ You may skip this step and head straight to conversion, but we recommend at leas
 
 Once the preparations have been made, you are now ready to perform the conversion. You now can run `yarn md h2m <folder> --locale <locale> --mode replace` and open a PR with the changes. The `replace` mode will first rename the HTML files from `.html` to `.md` without performing any conversion, then it will stage those changes, and finally convert the file contents (without staging them). To better retain git history, we recommend committing the staged changes (the files being moved), and then creating another commit with the conversion.
 
+#### Check for build errors
+
+Sometimes, characters within macros will be unintentionally escaped as a part of the conversion. Make sure to check macro issues by running `yarn build <files...>` and checking for any errors.
+
 #### Smaller PRs means faster review
 
 To speed up review time and reduce the chance of merge conflicts while your PR is in review, it is highly recommended to keep the number of files touched to a minimum. Although the changes are created using this script, every PR still needs to be carefully reviewed for accuracy and malicious changes.

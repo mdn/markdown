@@ -47,6 +47,7 @@ export const commonAllowed = {
     "clearLeft",
     "clearRight",
     "clearBoth",
+    "cleared",
     "tuto_example",
     "tuto_type",
     "tuto_details",
@@ -85,6 +86,10 @@ export const commonAllowed = {
     "obsoleteElement",
     "deprecatedElement",
     "nonStdElement",
+    "comment",
+    "token",
+    "line",
+    "sentence",
   ],
 };
 

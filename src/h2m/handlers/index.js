@@ -133,17 +133,11 @@ export const handlers = [
       canHaveClass: [
         "callout",
         "container",
-        "column-container",
-        "column-half",
-        "column-2",
-        "column-4",
-        "column-6",
-        "column-8",
-        "column-10",
-        "column-12",
+        (className) => className.startsWith("column-"),
         "twocolumns",
         "threecolumns",
         "equalColumnHeights",
+        "multiColumnList",
         "align-center",
         "originaldocinfo",
       ],
@@ -311,6 +305,7 @@ export const handlers = [
   ...[
     "js",
     "html",
+    "http",
     "css",
     "json",
     "svg",
@@ -324,6 +319,7 @@ export const handlers = [
     "python",
     "sql",
     "idl",
+    "shell",
     "example-good",
     "example-bad",
   ].flatMap((lang) =>
@@ -392,7 +388,7 @@ export const handlers = [
     },
   ],
 
-  [{ is: "math", canHave: "display" }, (node) => html(node)],
+  [{ is: "math", canHave: ["display"] }, (node) => html(node)],
 
   ["hr", (node) => h("thematicBreak")],
 

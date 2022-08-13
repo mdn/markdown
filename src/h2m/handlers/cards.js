@@ -73,36 +73,18 @@ export const cards = [
             childrenToAdd = asArray(t(children.slice(1)));
           } else if (labelText.includes(toText(firstChild).trim() + ":")) {
             // The colon is outside of the first child
-            if (children[1].value) {
-              childrenToAdd = [
-                h("text", " "),
-                ...asArray(
-                  t([
-                    {
-                      ...children[1],
-                      value: children[1].value.replace(/^:\s+/, " "),
-                    },
-                    ...children.slice(2),
-                  ])
-                ),
-              ];
-            } else {
-              childrenToAdd = [
-                h("text", " "),
-                ...asArray(
-                  t([
-                    {
-                      ...children[1].children[0],
-                      value: children[1].children[0].value.replace(
-                        /^:\s+/,
-                        " "
-                      ),
-                    },
-                    ...children.slice(2),
-                  ])
-                ),
-              ];
-            }
+            childrenToAdd = [
+              h("text", " "),
+              ...asArray(
+                t([
+                  {
+                    ...children[1],
+                    value: children[1].value.replace(/^:\s+/, " "),
+                  },
+                  ...children.slice(2),
+                ])
+              ),
+            ];
           } else if (
             firstChild.value &&
             labelText.some((t) => firstChild.value.startsWith(t))

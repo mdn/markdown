@@ -86,7 +86,6 @@ export const commonAllowed = {
     "obsoleteElement",
     "deprecatedElement",
     "nonStdElement",
-    "comment",
     "token",
     "line",
     "sentence",

@@ -179,7 +179,7 @@ program
 
       console.info(`Querying documents for ${query}...`);
 
-      const query = {
+      const documents = Document.findAll({
         locales: buildLocaleMap(options.locale),
         ...(isFile
           ? {
@@ -189,9 +189,7 @@ program
               // replace '\' with '\\' to make this regexp works on Windows
               folderSearch: os.platform() === "win32" ? query : query,
             }),
-      };
-
-      const documents = Document.findAll(query);
+      });
 
       if (documents.count === 0) {
         console.error(

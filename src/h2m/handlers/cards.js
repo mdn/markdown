@@ -115,22 +115,21 @@ export const cards = [
       }
 
       if (children[0].tagName == "p") {
-        childrenToAdd.push(...extractLabel(children[0].children, t, labelText));
-        childrenToAdd.push(
-          ...asArray(t(children.slice(1)))
-            .map((c) => [h("break"), c])
-            .flat(1)
-        );
+        return h("blockquote", [
+          h("paragraph", [
+            h("strong", [h("text", labelText[0])]),
+            ...extractLabel(children[0].children, t, labelText),
+          ]),
+          ...asArray(t(children.slice(1))),
+        ]);
       } else {
-        childrenToAdd.push(...extractLabel(children, t, labelText));
+        return h("blockquote", [
+          h("paragraph", [
+            h("strong", [h("text", labelText[0])]),
+            ...extractLabel(children, t, labelText),
+          ]),
+        ]);
       }
-
-      return h("blockquote", [
-        h("paragraph", [
-          h("strong", [h("text", labelText[0])]),
-          ...childrenToAdd,
-        ]),
-      ]);
     },
   ]),
 ];

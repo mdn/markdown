@@ -29,16 +29,19 @@ const prefixDefinitions = ([first, ...rest]) => {
     return h("text", "");
   }
 
-  const restToAdd = rest ? [h("break"), ...rest] : [];
+  return wrapNonBlocks([
+    {
+      ...first,
+      ...(first.type === "text"
+        ? {
+            value: DEFINITION_PREFIX + first.value,
+          }
+        : { children: [DEFINITION_START, ...first.children] }),
+    },
+    ...rest,
+  ]);
 
-  if (first.type === "paragaph") {
-    return wrapNonBlocks([
-      { ...first, children: [DEFINITION_START, ...first.children] },
-      ...restToAdd,
-    ]);
-  }
-
-  return h("paragraph", [DEFINITION_START, first, ...restToAdd]);
+  // return wrapNonBlocks([first, ...rest]); // h("paragraph", [DEFINITION_START, first, ...rest]);
 };
 
 const toDefinitionItem = (node, terms, definitions) =>

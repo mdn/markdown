@@ -50,11 +50,11 @@ This is a paragraph with a link to [another page](/en-US/docs/Web).
 ### A Definition List
 
 - Key 1
-
   - : Value 1
-
 - Key 2
+
   - : Value 2, can be one of:
+
     - Foo
     - Bar
     - Baz

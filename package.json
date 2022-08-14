@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@caporal/core": "2.0.2",
-    "@mdn/yari": "1.14.15",
+    "@mdn/yari": "1.14.22",
     "chalk": "5.0.1",
     "cheerio": "1.0.0-rc.12",
     "cli-progress": "3.11.2",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "env-cmd": "10.1.0",
-    "eslint": "8.21.0",
+    "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0"
   },

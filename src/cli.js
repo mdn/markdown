@@ -1,4 +1,6 @@
 import fs from "fs";
+import path from "path";
+import os from "os";
 import fm from "front-matter";
 import { createRequire } from "module";
 import chalk from "chalk";
@@ -92,7 +94,7 @@ function saveProblemsReport(problems) {
     }
   }
   if (problemCount > 0) {
-    const reportFileName = `md-conversion-problems-report-${now.toISOString()}.md`;
+    const reportFileName = `md-conversion-problems-report-${now.toISOString().replace(/:/g, "_")}.md`;
     console.info(
       `Could not automatically convert ${problemCount} elements. Saving report to ${reportFileName}`
     );
@@ -106,6 +108,18 @@ function buildLocaleMap(locale) {
     localesMap = new Map([[locale.toLowerCase(), locale]]);
   }
   return localesMap;
+}
+
+// opposite of slugToFolder
+function folderToSlug(folder) {
+  return folder
+    .slice(0, -1) // remove the trailing slash
+    .replace(/_question_/g, "?")
+    .replace(/_colon_/g, ":")
+    .replace(/_doublecolon_/g, "::")
+    .replace(/_star_/g, "*")
+    .replace(/\\/g, "/") // replace windows path separator
+    .toLowerCase();
 }
 
 program
@@ -142,12 +156,16 @@ program
   .argument("[folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
-      const folder = args.folder || "";
+      let folder = (args.folder || "").replace(/\\|\//g, path.sep); // correct path separator
+      if (folder.length !== 0 && !folder.endsWith(path.sep)) { // if folder is specified, find folder only
+        folder += path.sep;
+      }
       console.info(
         `Starting HTML to Markdown conversion in ${options.mode} mode`
       );
       const documents = Document.findAll({
-        folderSearch: folder,
+        // replace '\' with '\\' to make this regexp works on Windows
+        folderSearch: os.platform() === "win32" ? folder.replace(/\\/g, "\\\\") : folder,
         locales: buildLocaleMap(options.locale),
       });
 
@@ -157,6 +175,8 @@ program
       );
       progressBar.start(documents.count);
 
+      const slugPrefix = folderToSlug(folder);
+
       const problems = new Map();
       try {
         for (let doc of documents.iter()) {
@@ -164,7 +184,7 @@ program
           if (
             doc.isMarkdown ||
             // findAll's folderSearch is fuzzy which we don't want here
-            !doc.metadata.slug.toLowerCase().startsWith(folder.toLowerCase())
+            !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)
           ) {
             continue;
           }

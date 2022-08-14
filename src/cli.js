@@ -119,6 +119,10 @@ program
     default: "replace",
     validator: ["dry", "keep", "replace"],
   })
+  .option("--skip-report", "Skip saving the conversion problems report", {
+    default: false,
+    validator: program.BOOLEAN,
+  })
   .option("--print-ast", "Prints MD AST", {
     default: false,
     validator: program.BOOLEAN,
@@ -209,7 +213,7 @@ program
         progressBar.stop();
       }
 
-      saveProblemsReport(problems);
+      if (!options.skipReport) saveProblemsReport(problems);
     })
   );
 

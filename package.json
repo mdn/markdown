@@ -11,7 +11,7 @@
     "lint:js": "eslint --ext .js src",
     "h2m": "env-cmd node src/cli.js",
     "h2m:test": "env-cmd -f ./testing/.env node src/cli.js",
-    "test": "yarn h2m:test markdown/tool/h2m --locale en-US --mode keep && diff -s testing/content/files/en-us/markdown/tool/h2m/index.md testing/content/files/en-us/markdown/tool/h2m/expected.md"
+    "test": "yarn h2m:test markdown/tool/h2m --locale en-US --mode keep --skip-report && diff -s testing/content/files/en-us/markdown/tool/h2m/index.md testing/content/files/en-us/markdown/tool/h2m/expected.md"
   },
   "dependencies": {
     "@caporal/core": "2.0.2",

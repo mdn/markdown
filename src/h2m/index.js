@@ -21,6 +21,7 @@ const getTransformProcessor = (options) =>
       options: { embeddedLanguageFormatting: "off", proseWrap: "preserve" },
     })
     .use({
+      // https://github.com/remarkjs/remark/tree/main/packages/remark-stringify#options
       settings: { bullet: "-", emphasis: "_", fences: true, rule: "-" },
     });
 

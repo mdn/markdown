@@ -111,7 +111,7 @@ function buildLocaleMap(locale) {
 }
 
 // opposite of slugToFolder
-function folderToSlugLC(folder) {
+function folderToSlug(folder) {
   return folder
     .slice(0, -1) // remove the trailing slash
     .replace(/_question_/g, "?")
@@ -163,7 +163,7 @@ program
       );
       progressBar.start(documents.count);
 
-      const slugPrefixLC = folderToSlugLC(folder);
+      const slugPrefix = folderToSlug(folder);
 
       const problems = new Map();
       try {
@@ -172,7 +172,7 @@ program
           if (
             doc.isMarkdown ||
             // findAll's folderSearch is fuzzy which we don't want here
-            !doc.metadata.slug.toLowerCase().startsWith(slugPrefixLC)
+            !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)
           ) {
             continue;
           }

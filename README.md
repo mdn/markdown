@@ -49,6 +49,12 @@ To perform a conversion of all French locale files:
 yarn h2m --locale fr --mode replace
 ```
 
+Or perform a conversion of specifically the `mdn` Spanish doc without converting the rest of the folder, keeping the original HTML file:
+
+```sh
+yarn mdn/index.html --locale es --mode keep
+```
+
 ### `--skip-problems`
 
 To speed up conversion, you can specify a `--skip-problems` argument to skip conversion of any files containing conversion issues:

@@ -121,8 +121,9 @@ function buildLocaleMap(locale) {
 }
 
 // opposite of slugToFolder
-function folderToSlug(folder) {
-  return folder
+function fileQueryToSlug(query) {
+  return query
+    .replace(/index(\.md|\.html)?$/g, "") // replace file name
     .slice(0, -1) // remove the trailing slash
     .replace(/_question_/g, "?")
     .replace(/_colon_/g, ":")
@@ -163,23 +164,46 @@ program
       validator: program.BOOLEAN,
     }
   )
-  .argument("[folder]", "convert by folder")
+  .argument("[file_or_folder]", "convert by folder")
   .action(
     tryOrExit(async ({ args, options }) => {
-      let folder = (args.folder || "").replace(/\\|\//g, path.sep); // correct path separator
-      if (folder.length !== 0 && !folder.endsWith(path.sep)) {
+      let query = (args.fileOrFolder || "").replace(/\\|\//g, path.sep); // correct path separator
+      let isFile = ["index", "index.md", "index.html"].some((e) =>
+        query.endsWith(e)
+      );
+
+      if (query.length !== 0 && !query.endsWith(path.sep) && !isFile) {
         // if folder is specified, find folder only
-        folder += path.sep;
+        query += path.sep;
       }
+
+      console.info(`Querying documents for ${query}...`);
+
+      const query = {
+        locales: buildLocaleMap(options.locale),
+        ...(isFile
+          ? {
+              files: new Set([`/${query}`]),
+            }
+          : {
+              // replace '\' with '\\' to make this regexp works on Windows
+              folderSearch: os.platform() === "win32" ? query : query,
+            }),
+      };
+
+      const documents = Document.findAll(query);
+
+      if (documents.count === 0) {
+        console.error(
+          chalk.yellow("No documents matched the search query! Exiting.")
+        );
+
+        return;
+      }
+
       console.info(
         `Starting HTML to Markdown conversion in ${options.mode} mode`
       );
-      const documents = Document.findAll({
-        // replace '\' with '\\' to make this regexp works on Windows
-        folderSearch:
-          os.platform() === "win32" ? folder.replace(/\\/g, "\\\\") : folder,
-        locales: buildLocaleMap(options.locale),
-      });
 
       const progressBar = new cliProgress.SingleBar(
         {},
@@ -187,7 +211,7 @@ program
       );
       progressBar.start(documents.count);
 
-      const slugPrefix = folderToSlug(folder);
+      const slugPrefix = fileQueryToSlug(query);
 
       const problems = new Map();
       try {

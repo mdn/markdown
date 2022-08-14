@@ -187,7 +187,7 @@ program
             }
           : {
               // replace '\' with '\\' to make this regexp works on Windows
-              folderSearch: os.platform() === "win32" ? query : query,
+              folderSearch: os.platform() === "win32" ? query.replace(/\\/g, "\\\\") : query,
             }),
       });
 

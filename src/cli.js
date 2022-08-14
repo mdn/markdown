@@ -190,60 +190,59 @@ program
       const slugPrefix = folderToSlug(folder);
 
       const problems = new Map();
-      try {
-        for (let doc of documents.iter()) {
-          progressBar.increment();
-          if (
-            doc.isMarkdown ||
-            // findAll's folderSearch is fuzzy which we don't want here
-            !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)
-          ) {
-            continue;
-          }
-          if (options.verbose) {
-            console.info(doc.metadata.slug);
-          }
-          const { body: h, attributes: metadata } = fm(doc.rawContent);
-          const [markdown, { invalid, unhandled }] = await h2m(h, {
-            printAST: options.printAst,
-            locale: doc.metadata.locale,
+
+      for (let doc of documents.iter()) {
+        progressBar.increment();
+        if (
+          doc.isMarkdown ||
+          // findAll's folderSearch is fuzzy which we don't want here
+          !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)
+        ) {
+          continue;
+        }
+        if (options.verbose) {
+          console.info(doc.metadata.slug);
+        }
+        const { body: h, attributes: metadata } = fm(doc.rawContent);
+        const [markdown, { invalid, unhandled }] = await h2m(h, {
+          printAST: options.printAst,
+          locale: doc.metadata.locale,
+        });
+
+        if (invalid.length > 0 || unhandled.length > 0) {
+          problems.set(doc.url, {
+            offset: doc.fileInfo.frontMatterOffset,
+            invalid,
+            unhandled,
           });
 
-          if (invalid.length > 0 || unhandled.length > 0) {
-            problems.set(doc.url, {
-              offset: doc.fileInfo.frontMatterOffset,
-              invalid,
-              unhandled,
-            });
-
-            if (options.skipProblems) {
-              continue;
-            }
-          }
-
-          if (options.mode == "replace" || options.mode == "keep") {
-            if (options.mode == "replace") {
-              const gitRoot = getRoot(options.locale);
-              execGit(
-                [
-                  "mv",
-                  doc.fileInfo.path,
-                  doc.fileInfo.path.replace(/\.html$/, ".md"),
-                ],
-                {},
-                gitRoot
-              );
-            }
-            saveFile(
-              doc.fileInfo.path.replace(/\.html$/, ".md"),
-              markdown,
-              metadata
-            );
+          if (options.skipProblems) {
+            continue;
           }
         }
-      } finally {
-        progressBar.stop();
+
+        if (options.mode == "replace" || options.mode == "keep") {
+          if (options.mode == "replace") {
+            const gitRoot = getRoot(options.locale);
+            execGit(
+              [
+                "mv",
+                doc.fileInfo.path,
+                doc.fileInfo.path.replace(/\.html$/, ".md"),
+              ],
+              {},
+              gitRoot
+            );
+          }
+          saveFile(
+            doc.fileInfo.path.replace(/\.html$/, ".md"),
+            markdown,
+            metadata
+          );
+        }
       }
+
+      progressBar.stop();
 
       if (!options.skipReport) saveProblemsReport(problems);
     })

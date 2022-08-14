@@ -108,17 +108,52 @@ Hello there, world! How are you doing?
   </thead>
   <tbody>
     <tr>
-      <th scope="row">Goodbye</th>
+      <th colspan="1" scope="row">Goodbye</th>
       <td>Heatwaves</td>
     </tr>
     <tr>
-      <th scope="row">Thank you</th>
+      <th colspan="1" rowspan="1" scope="row">Thank you</th>
       <td>Space</td>
     </tr>
  </tbody>
 </table>
 
-<h4>Table with multiline content (don't convert)</h4>
+<h4>Table with rowspan/colspan > 1</h4>
+
+<table class="fullwidth-table standard-table">
+  <thead>
+    <tr>
+      <th rowspan="1">Hello</th>
+      <th rowspan="1">World</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Heatwaves</td>
+    </tr>
+    <tr>
+      <th colspan="2" scope="row">Thank you, space!</td>
+    </tr>
+ </tbody>
+</table>
+
+
+<h4><code>.properties</code> table</h4>
+
+<table class="properties">
+ <tbody>
+  <tr>
+   <th scope="row"><a href="/zh-CN/docs/HTML/Content_categories">Content categories</a></th>
+   <td><a href="/zh-CN/docs/HTML/Content_categories#Flow_content">Flow content</a>, <a href="/zh-CN/docs/HTML/Content_categories#Phrasing_content">phrasing content</a>.</td>
+  </tr>
+  <tr>
+   <th scope="row">Permitted content</th>
+   <td>Empty</td>
+  </tr>
+ </tbody>
+</table>
+
+<h4>Table with multiline content</h4>
 
 <table class="fullwidth-table standard-table">
  <tbody>

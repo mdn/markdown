@@ -6,12 +6,18 @@ export const tables = [
   [
     {
       is: "table",
-      canHave: ["style", "dir", "lang"],
+      hasClass: ["properties"],
+    },
+    (node) => html(node),
+  ],
+
+  [
+    {
+      is: "table",
       canHaveClass: [
         "standard-table",
         "fullwidth-table",
         "full-width-table",
-        "properties",
         "nostripe",
       ],
     },
@@ -36,7 +42,7 @@ export const tables = [
   ],
 
   [
-    { is: "tr", canHave: ["id", "scope", "style", "dir", "lang"] },
+    { is: "tr", canHave: ["scope"] },
     (node, t) => {
       const children = t(node.children);
       return children.some((c) => c.type === "html")
@@ -48,7 +54,7 @@ export const tables = [
   [
     {
       is: ["th", "td"],
-      canHave: ["id", "scope", "style", "dir", "lang", "rowSpan", "colSpan"],
+      canHave: ["scope", "rowSpan", "colSpan"],
       canHaveClass: ["header"],
     },
     (node, t) => {

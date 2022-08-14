@@ -90,7 +90,50 @@ Hello there, world! How are you doing?
 | Goodbye   | Heatwaves |
 | Thank you | Space     |
 
-#### Table with multiline content (don't convert)
+#### Table with rowspan/colspan > 1
+
+<table class="fullwidth-table standard-table">
+  <thead>
+    <tr>
+      <th rowspan="1">Hello</th>
+      <th rowspan="1">World</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Heatwaves</td>
+    </tr>
+    <tr>
+      <th colspan="2" scope="row">Thank you, space!</th>
+    </tr>
+  </tbody>
+</table>
+
+#### `.properties` table
+
+<table class="properties">
+  <tbody>
+    <tr>
+      <th scope="row">
+        <a href="/zh-CN/docs/HTML/Content_categories">Content categories</a>
+      </th>
+      <td>
+        <a href="/zh-CN/docs/HTML/Content_categories#Flow_content"
+          >Flow content</a
+        >,
+        <a href="/zh-CN/docs/HTML/Content_categories#Phrasing_content"
+          >phrasing content</a
+        >.
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Permitted content</th>
+      <td>Empty</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Table with multiline content
 
 <table class="fullwidth-table standard-table">
   <tbody>

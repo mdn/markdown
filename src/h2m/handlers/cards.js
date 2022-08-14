@@ -114,6 +114,11 @@ export const cards = [
         children = children[0].children;
       }
 
+      if (children.length === 0) {
+        // Empty cards should be ignored
+        return h("text", " ");
+      }
+
       if (children[0].tagName == "p") {
         return h("blockquote", [
           h("paragraph", [

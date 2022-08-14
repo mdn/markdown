@@ -17,21 +17,23 @@ import { toSelector } from "./h2m/utils.js";
 const require = createRequire(import.meta.url);
 const { program } = require("@caporal/core");
 
+function formatError(e) {
+  return chalk.red(
+    error.stack.replace(
+      // Retain underlining node_modules in error stack
+      /\/node_modules\/([\w\d_-]+)/g,
+      "/node_modules/" + chalk.underline("$1")
+    )
+  );
+}
+
 function tryOrExit(f) {
   return async ({ options = {}, ...args }) => {
     try {
       await f({ options, ...args });
     } catch (error) {
       if (options.verbose || options.v) {
-        console.error(
-          chalk.red(
-            error.stack.replace(
-              // Retain underlining node_modules in error stack
-              /\/node_modules\/([\w\d_-]+)/g,
-              "/node_modules/" + chalk.underline("$1")
-            )
-          )
-        );
+        console.error(formatError(error));
       }
       throw error;
     }
@@ -187,7 +189,10 @@ program
             }
           : {
               // replace '\' with '\\' to make this regexp works on Windows
-              folderSearch: os.platform() === "win32" ? query.replace(/\\/g, "\\\\") : query,
+              folderSearch:
+                os.platform() === "win32"
+                  ? query.replace(/\\/g, "\\\\")
+                  : query,
             }),
       });
 
@@ -212,8 +217,8 @@ program
       const slugPrefix = fileQueryToSlug(query);
 
       const problems = new Map();
-      try {
-        for (let doc of documents.iter()) {
+      for (let doc of documents.iter()) {
+        try {
           progressBar.increment();
           if (
             doc.isMarkdown ||
@@ -262,10 +267,18 @@ program
               metadata
             );
           }
+        } catch (e) {
+          console.error(
+            chalk.red(
+              `An error was thrown while converting ${doc.metadata.slug}!`
+            )
+          );
+          console.error(formatError(e));
+          console.error();
         }
-      } finally {
-        progressBar.stop();
       }
+
+      progressBar.stop();
 
       if (!options.skipReport) saveProblemsReport(problems);
     })

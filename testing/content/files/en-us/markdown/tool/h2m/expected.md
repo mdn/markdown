@@ -40,6 +40,13 @@ This is a paragraph with a link to [another page](/en-US/docs/Web).
 
 > **Callout:** remember to remove unneeded whitespace.
 
+> **Warning:** Try the following code instead:\
+>
+> ```js
+> var img = document.createElementNS("http://www.w3.org/2000/svg", "image");
+> img.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "move.png");
+> ```
+
 ### A Definition List
 
 - Key

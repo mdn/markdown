@@ -36,6 +36,57 @@ const getLocalizationMap = async () => {
 
 const gettextLocalizationMap = await getLocalizationMap();
 
+const extractLabel = (children, t, labelText) => {
+  const firstChild = children[0];
+
+  let childrenToAdd = [h("text", " "), ...asArray(t(children))];
+
+  if (firstChild) {
+    if (["strong", "b", "em", "i"].includes(firstChild.tagName)) {
+      if (labelText.includes(toText(firstChild).trim())) {
+        // First child is already the proper label
+        childrenToAdd = asArray(t(children.slice(1)));
+      } else if (labelText.includes(toText(firstChild).trim() + ":")) {
+        // The colon is outside of the first child
+        childrenToAdd = [
+          h("text", " "),
+          ...asArray(
+            t([
+              {
+                ...children[1],
+                value: children[1].value.replace(/^:\s+/, " "),
+              },
+              ...children.slice(2),
+            ])
+          ),
+        ];
+      } else if (
+        firstChild.value &&
+        labelText.some((t) => firstChild.value.startsWith(t))
+      ) {
+        // No strong tag, but the text is preceded with the proper label
+        childrenToAdd = [
+          h("text", " "),
+          ...asArray(
+            t([
+              {
+                ...children[0],
+                value: children[0].value.replace(
+                  new RegExp(`^${labelText.join("|")} `, "g"),
+                  ""
+                ),
+              },
+              ...children.slice(1),
+            ])
+          ),
+        ];
+      }
+    }
+  }
+
+  return childrenToAdd;
+};
+
 export const cards = [
   ...["note", "warning", "callout"].map((className) => [
     {
@@ -50,63 +101,28 @@ export const cards = [
         gt = gettextLocalizationMap.get(locale);
       }
 
+      const labelText = [
+        gt.gettext("card_" + className + "_label"),
+        defaultLocaleGt.gettext("card_" + className + "_label"),
+      ];
+
       let children = node.children;
+      let childrenToAdd = [];
 
       if (children.length == 1 && children[0].tagName == "p") {
         // If note is surrounded by paragraph tag, use its contents
         children = children[0].children;
       }
 
-      const labelText = [
-        gt.gettext("card_" + className + "_label"),
-        defaultLocaleGt.gettext("card_" + className + "_label"),
-      ];
-
-      const firstChild = children[0];
-
-      let childrenToAdd = [h("text", " "), ...asArray(t(children))];
-
-      if (firstChild) {
-        if (["strong", "b", "em", "i"].includes(firstChild.tagName)) {
-          if (labelText.includes(toText(firstChild).trim())) {
-            // First child is already the proper label
-            childrenToAdd = asArray(t(children.slice(1)));
-          } else if (labelText.includes(toText(firstChild).trim() + ":")) {
-            // The colon is outside of the first child
-            childrenToAdd = [
-              h("text", " "),
-              ...asArray(
-                t([
-                  {
-                    ...children[1],
-                    value: children[1].value.replace(/^:\s+/, " "),
-                  },
-                  ...children.slice(2),
-                ])
-              ),
-            ];
-          } else if (
-            firstChild.value &&
-            labelText.some((t) => firstChild.value.startsWith(t))
-          ) {
-            // No strong tag, but the text is preceded with the proper label
-            childrenToAdd = [
-              h("text", " "),
-              ...asArray(
-                t([
-                  {
-                    ...children[0],
-                    value: children[0].value.replace(
-                      new RegExp(`^${labelText.join("|")} `, "g"),
-                      ""
-                    ),
-                  },
-                  ...children.slice(1),
-                ])
-              ),
-            ];
-          }
-        }
+      if (children[0].tagName == "p") {
+        childrenToAdd.push(...extractLabel(children[0].children, t, labelText));
+        childrenToAdd.push(
+          ...asArray(t(children.slice(1)))
+            .map((c) => [h("break"), c])
+            .flat(1)
+        );
+      } else {
+        childrenToAdd.push(...extractLabel(children, t, labelText));
       }
 
       return h("blockquote", [

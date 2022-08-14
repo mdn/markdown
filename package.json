@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@caporal/core": "2.0.2",
-    "@mdn/yari": "1.14.3",
+    "@mdn/yari": "1.14.15",
     "chalk": "5.0.1",
     "cheerio": "1.0.0-rc.12",
     "cli-progress": "3.11.2",

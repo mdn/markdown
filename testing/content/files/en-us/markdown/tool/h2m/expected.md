@@ -75,3 +75,40 @@ div#foo {
   color: pink;
 }
 ```
+
+### Tables
+
+#### Normal table
+
+| Hello     | World     |
+| --------- | --------- |
+| Goodbye   | Heatwaves |
+| Thank you | Space     |
+
+#### Table with multiline content (don't convert)
+
+<table class="fullwidth-table standard-table">
+  <tbody>
+    <tr>
+      <th scope="row" style="width: 30%">Type</th>
+      <td><code>Array</code></td>
+    </tr>
+    <tr>
+      <th scope="row">Mandatory</th>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th scope="row">Example</th>
+      <td>
+        <pre class="brush: json no-line-numbers">
+"content_scripts": [
+  {
+    "matches": ["*://*.mozilla.org/*"],
+    "js": ["borderify.js"]
+  }
+]</pre
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>

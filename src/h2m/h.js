@@ -145,7 +145,7 @@ const CHILDREN_TYPES = {
   listItem: BLOCK_CONTENT,
   table: ["tableRow"],
   tableRow: ["tableCell"],
-  tableCell: PHRASING_CONTENT,
+  tableCell: PHRASING_CONTENT.filter((t) => t !== "code"),
   footnoteDefinition: BLOCK_CONTENT,
   emphasis: PHRASING_CONTENT,
   strong: PHRASING_CONTENT,

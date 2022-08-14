@@ -90,3 +90,53 @@ div#foo {
   color: pink;
 }
 </pre>
+
+<h3>Tables</h3>
+
+<h4>Normal table</h4>
+
+<table class="fullwidth-table standard-table">
+  <thead>
+    <tr>
+      <th>Hello</th>
+      <th rowspan="1">World</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Goodbye</th>
+      <td>Heatwaves</td>
+    </tr>
+    <tr>
+      <th scope="row">Thank you</th>
+      <td>Space</td>
+    </tr>
+ </tbody>
+</table>
+
+<h4>Table with multiline content (don't convert)</h4>
+
+<table class="fullwidth-table standard-table">
+ <tbody>
+  <tr>
+   <th scope="row" style="width: 30%;">Type</th>
+   <td><code>Array</code></td>
+  </tr>
+  <tr>
+   <th scope="row">Mandatory</th>
+   <td>No</td>
+  </tr>
+  <tr>
+   <th scope="row">Example</th>
+   <td>
+    <pre class="brush: json no-line-numbers">
+"content_scripts": [
+  {
+    "matches": ["*://*.mozilla.org/*"],
+    "js": ["borderify.js"]
+  }
+]</pre>
+   </td>
+  </tr>
+ </tbody>
+</table>

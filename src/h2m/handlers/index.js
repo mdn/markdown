@@ -1,4 +1,5 @@
 import trimTrailingLines from "trim-trailing-lines";
+import { DEFAULT_LOCALE } from "@mdn/yari/libs/constants/index.js";
 
 import { h, html } from "../h.js";
 import { asArray, wrapText } from "../utils.js";

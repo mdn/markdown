@@ -116,7 +116,7 @@ program
   .cast(false)
 
   .option("--mode <mode>", "Mode to be run in", {
-    default: "keep",
+    default: "replace",
     validator: ["dry", "keep", "replace"],
   })
   .option("--print-ast", "Prints MD AST", {

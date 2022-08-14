@@ -29,14 +29,16 @@ const prefixDefinitions = ([first, ...rest]) => {
     return h("text", "");
   }
 
+  const restToAdd = rest ? [h("break"), ...rest] : [];
+
   if (first.type === "paragaph") {
     return wrapNonBlocks([
       { ...first, children: [DEFINITION_START, ...first.children] },
-      ...rest,
+      ...restToAdd,
     ]);
   }
 
-  return h("paragraph", [DEFINITION_START, first, ...rest]);
+  return h("paragraph", [DEFINITION_START, first, ...restToAdd]);
 };
 
 const toDefinitionItem = (node, terms, definitions) =>

@@ -10,7 +10,7 @@
   "scripts": {
     "lint:js": "eslint --ext .js src",
     "h2m": "env-cmd node src/cli.js",
-    "test": "c8 mocha ./testing/test.js"
+    "test": "c8 mocha ./test/test.js"
   },
   "dependencies": {
     "@caporal/core": "2.0.2",

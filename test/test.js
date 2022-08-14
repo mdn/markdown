@@ -17,7 +17,7 @@ const convertLocale = (l) => {
 const files = await new fdir()
   .withBasePath()
   .filter((path) => path.endsWith(".html"))
-  .crawl("./testing/content")
+  .crawl("./test/content")
   .withPromise();
 
 console.log(files);

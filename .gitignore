@@ -102,4 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
-md-conversion-problems-report*.md
+
+# Runtime output
+ast-*.md
+md-conversion-problems-report-*.md

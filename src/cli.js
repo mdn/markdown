@@ -147,9 +147,9 @@ program
     default: false,
     validator: program.BOOLEAN,
   })
-  .option("--print-ast", "Prints MD AST", {
+  .option("--export-ast", "Prints MD AST", {
     default: false,
-    validator: program.BOOLEAN,
+    validator: [false, "print", "file"],
   })
   .option("--locale", "Targets a specific locale", {
     default: "all",
@@ -205,7 +205,7 @@ program
           }
           const { body: h, attributes: metadata } = fm(doc.rawContent);
           const [markdown, { invalid, unhandled }] = await h2m(h, {
-            printAST: options.printAst,
+            exportAST: options.exportAst,
             locale: doc.metadata.locale,
           });
 

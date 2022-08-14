@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import cheerio from "cheerio";
 import { unified } from "unified";
 import parseHTML from "rehype-parse";
@@ -25,7 +26,7 @@ const getTransformProcessor = (options) =>
       settings: { bullet: "-", emphasis: "_", fences: true, rule: "-" },
     });
 
-export async function h2m(html, { printAST, locale } = {}) {
+export async function h2m(html, { exportAST, locale } = {}) {
   const encodedHTML = encodeKS(html);
   const summary = extractSummary(
     extractSections(cheerio.load(`<div id="_body">${encodedHTML}</div>`))[0]
@@ -37,8 +38,15 @@ export async function h2m(html, { printAST, locale } = {}) {
     .use(() => (result) => {
       invalid = result.invalid;
       unhandled = result.unhandled;
-      if (printAST) {
-        console.info(prettyAST(result.transformed));
+      if (exportAST) {
+        const ASToutput = prettyAST(result.transformed);
+        if (exportAST === "print") console.info(ASToutput);
+        else if (exportAST === "file") {
+          const filename = `ast-${new Date()
+            .toISOString()
+            .replace(/:/g, "_")}.md`;
+          fs.writeFileSync(filename, ASToutput);
+        }
       }
       return result.transformed;
     })

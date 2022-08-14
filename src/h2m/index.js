@@ -21,7 +21,7 @@ const getTransformProcessor = (options) =>
       options: { embeddedLanguageFormatting: "off", proseWrap: "preserve" },
     })
     .use({
-      settings: { emphasis: "_" },
+      settings: { bullet: "-", emphasis: "_", fences: true },
     });
 
 export async function h2m(html, { printAST, locale } = {}) {

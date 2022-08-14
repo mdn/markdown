@@ -23,7 +23,15 @@ function tryOrExit(f) {
       await f({ options, ...args });
     } catch (error) {
       if (options.verbose || options.v) {
-        console.error(chalk.red(error.stack));
+        console.error(
+          chalk.red(
+            error.stack.replace(
+              // Retain underlining node_modules in error stack
+              /\/node_modules\/([\w\d_-]+)/g,
+              "/node_modules/" + chalk.underline("$1")
+            )
+          )
+        );
       }
       throw error;
     }
@@ -94,7 +102,9 @@ function saveProblemsReport(problems) {
     }
   }
   if (problemCount > 0) {
-    const reportFileName = `md-conversion-problems-report-${now.toISOString().replace(/:/g, "_")}.md`;
+    const reportFileName = `md-conversion-problems-report-${now
+      .toISOString()
+      .replace(/:/g, "_")}.md`;
     console.info(
       `Could not automatically convert ${problemCount} elements. Saving report to ${reportFileName}`
     );
@@ -157,7 +167,8 @@ program
   .action(
     tryOrExit(async ({ args, options }) => {
       let folder = (args.folder || "").replace(/\\|\//g, path.sep); // correct path separator
-      if (folder.length !== 0 && !folder.endsWith(path.sep)) { // if folder is specified, find folder only
+      if (folder.length !== 0 && !folder.endsWith(path.sep)) {
+        // if folder is specified, find folder only
         folder += path.sep;
       }
       console.info(
@@ -165,7 +176,8 @@ program
       );
       const documents = Document.findAll({
         // replace '\' with '\\' to make this regexp works on Windows
-        folderSearch: os.platform() === "win32" ? folder.replace(/\\/g, "\\\\") : folder,
+        folderSearch:
+          os.platform() === "win32" ? folder.replace(/\\/g, "\\\\") : folder,
         locales: buildLocaleMap(options.locale),
       });
 

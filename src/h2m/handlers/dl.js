@@ -4,22 +4,21 @@ const DEFINITION_PREFIX = ": ";
 const DEFINITION_START = h("text", DEFINITION_PREFIX);
 
 const wrapNonBlocks = (nodes) => {
-  let openParagraph = null;
+  let paragraphChildren = [];
   const result = [];
   for (const node of nodes) {
     if (isBlockContent(node)) {
-      if (openParagraph) {
-        result.push(openParagraph);
-        openParagraph = null;
+      if (paragraphChildren) {
+        result.push(h("paragraph", paragraphChildren));
+        paragraphChildren = [];
       }
       result.push(node);
     } else {
-      openParagraph = h("paragraph", []);
-      openParagraph.children.push(node);
+      paragraphChildren.push(node);
     }
   }
-  if (openParagraph) {
-    result.push(openParagraph);
+  if (paragraphChildren) {
+    result.push(h("paragraph", paragraphChildren));
   }
   return result;
 };
@@ -29,19 +28,27 @@ const prefixDefinitions = ([first, ...rest]) => {
     return h("text", "");
   }
 
-  return wrapNonBlocks([
-    {
-      ...first,
-      ...(first.type === "text"
-        ? {
-            value: DEFINITION_PREFIX + first.value,
-          }
-        : { children: [DEFINITION_START, ...first.children] }),
-    },
-    ...rest,
-  ]);
+  if (first.type === "text") {
+    return wrapNonBlocks([
+      {
+        ...first,
+        value: DEFINITION_PREFIX + first.value,
+      },
+      ...rest,
+    ]);
+  }
 
-  // return wrapNonBlocks([first, ...rest]); // h("paragraph", [DEFINITION_START, first, ...rest]);
+  if (first.children) {
+    return wrapNonBlocks([
+      {
+        ...first,
+        children: [DEFINITION_START, ...first.children],
+      },
+      ...rest,
+    ]);
+  }
+
+  return wrapNonBlocks([DEFINITION_START, first, ...rest]);
 };
 
 const toDefinitionItem = (node, terms, definitions) =>

@@ -1,6 +1,6 @@
 ---
 title: This is a test page
-slug: Markdown/Tool/H2M
+slug: main
 tags:
   - Tag2
 ---

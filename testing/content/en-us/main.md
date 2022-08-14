@@ -104,7 +104,7 @@ Hello there, world! How are you doing?
       <td>Heatwaves</td>
     </tr>
     <tr>
-      <th colspan="2" scope="row">Thank you, space!</th>
+      <td colspan="2" scope="row">Thank you, space!</td>
     </tr>
   </tbody>
 </table>

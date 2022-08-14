@@ -40,7 +40,7 @@ This is a paragraph with a link to [another page](/en-US/docs/Web).
 
 > **Callout:** remember to remove unneeded whitespace.
 
-> **Warning:** Try the following code instead:\
+> **Warning:** Try the following code instead:
 >
 > ```js
 > var img = document.createElementNS("http://www.w3.org/2000/svg", "image");

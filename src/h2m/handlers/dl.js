@@ -8,7 +8,7 @@ const wrapNonBlocks = (nodes) => {
   const result = [];
   for (const node of nodes) {
     if (isBlockContent(node)) {
-      if (paragraphChildren) {
+      if (paragraphChildren.length) {
         result.push(h("paragraph", paragraphChildren));
         paragraphChildren = [];
       }
@@ -17,7 +17,7 @@ const wrapNonBlocks = (nodes) => {
       paragraphChildren.push(node);
     }
   }
-  if (paragraphChildren) {
+  if (paragraphChildren.length) {
     result.push(h("paragraph", paragraphChildren));
   }
   return result;

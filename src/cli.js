@@ -199,15 +199,9 @@ program
 
       const htmlFiles = [...documents.iter({pathOnly: true})].filter(filePath => filePath.endsWith(HTML_FILENAME));
 
-      function* fileIter() {
-        for (const filePath of htmlFiles) {
-          yield Document.read(filePath);
-        }
-      }
-
       if (htmlFiles.length === 0) {
         console.error(
-          chalk.yellow("No documents matched the search query! Exiting.")
+          chalk.yellow("No HTML documents matched the search query! Exiting.")
         );
 
         return;
@@ -226,9 +220,10 @@ program
       const slugPrefix = fileQueryToSlug(query);
 
       const problems = new Map();
-      for (const doc of fileIter()) {
+      for (const htmlFile of htmlFiles) {
         try {
           progressBar.increment();
+          const doc = Document.read(htmlFile)
           if (
             // findAll's folderSearch is fuzzy which we don't want here
             !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)

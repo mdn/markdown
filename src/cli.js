@@ -6,6 +6,7 @@ import { createRequire } from "module";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import { Document, execGit } from "@mdn/yari/content/index.js";
+import { HTML_FILENAME } from "@mdn/yari/libs/constants/index.js";
 import { saveFile } from "@mdn/yari/content/document.js";
 import { VALID_LOCALES } from "@mdn/yari/libs/constants/index.js";
 import { getRoot } from "@mdn/yari/content/utils.js";
@@ -196,9 +197,11 @@ program
             }),
       });
 
-      if (documents.count === 0) {
+      const htmlFiles = [...documents.iter({pathOnly: true})].filter(filePath => filePath.endsWith(HTML_FILENAME));
+
+      if (htmlFiles.length === 0) {
         console.error(
-          chalk.yellow("No documents matched the search query! Exiting.")
+          chalk.yellow("No HTML documents matched the search query! Exiting.")
         );
 
         return;
@@ -212,16 +215,16 @@ program
         {},
         cliProgress.Presets.shades_classic
       );
-      progressBar.start(documents.count);
+      progressBar.start(htmlFiles.length);
 
       const slugPrefix = fileQueryToSlug(query);
 
       const problems = new Map();
-      for (let doc of documents.iter()) {
+      for (const htmlFile of htmlFiles) {
         try {
           progressBar.increment();
+          const doc = Document.read(htmlFile)
           if (
-            doc.isMarkdown ||
             // findAll's folderSearch is fuzzy which we don't want here
             !doc.metadata.slug.toLowerCase().startsWith(slugPrefix)
           ) {

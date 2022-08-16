@@ -21,3 +21,5 @@ slug: dl
   - : 当鼠标事件触发的时，如果鼠标按钮被按下（如果有的话），将会返回一个数值。
 - {{domxref("MouseEvent.buttons")}} {{readonlyinline}}
   - : 当鼠标事件触发的时，如果多个鼠标按钮被按下（如果有的话），将会返回一个或者多个代表鼠标按钮的数字。
+- {{domxref("AudioParam")}}
+  - : **`AudioParam`** 接口代表音频相关的参数，比如一个 {{domxref("AudioNode")}} 的参数。它可以设置为特定值或值的变化，并且可以在指定的时间之后以指定模式变更。

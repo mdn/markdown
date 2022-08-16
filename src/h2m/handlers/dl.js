@@ -38,7 +38,7 @@ const prefixDefinitions = ([first, ...rest]) => {
     ]);
   }
 
-  if (first.children) {
+  if (first.type === "paragraph") {
     return wrapNonBlocks([
       {
         ...first,

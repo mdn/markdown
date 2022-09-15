@@ -46,7 +46,7 @@ const extractLabel = (children, t, labelText) => {
       if (labelText.includes(toText(firstChild).trim())) {
         // First child is already the proper label
         childrenToAdd = asArray(t(children.slice(1)));
-      } else if (labelText.includes(toText(firstChild).trim() + ":")) {
+      } else if (labelText.includes(toText(firstChild).trim() + ":") && children[1].value !== undefined) {
         // The colon is outside of the first child
         childrenToAdd = [
           h("text", " "),

@@ -20,7 +20,7 @@ const { program } = require("@caporal/core");
 
 function formatError(e) {
   return chalk.red(
-    error.stack.replace(
+    e.stack.replace(
       // Retain underlining node_modules in error stack
       /\/node_modules\/([\w\d_-]+)/g,
       "/node_modules/" + chalk.underline("$1")
@@ -273,7 +273,7 @@ program
         } catch (e) {
           console.error(
             chalk.red(
-              `An error was thrown while converting ${doc.metadata.slug}!`
+              `An error was thrown while converting ${htmlFile}!`
             )
           );
           console.error(formatError(e));

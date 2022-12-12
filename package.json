@@ -26,7 +26,7 @@
     "hast-util-to-text": "3.1.1",
     "js-yaml": "4.1.0",
     "mdast-util-phrasing": "3.0.0",
-    "mocha": "10.0.0",
+    "mocha": "10.2.0",
     "node-gettext": "3.0.0",
     "prettier": "2.7.1",
     "rehype-format": "4.0.1",

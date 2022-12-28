@@ -1,6 +1,6 @@
 # markdown
 
-MDN Web Docs tool to covert HTML to Markdown.
+MDN Web Docs tool to convert HTML to Markdown.
 
 ## Prerequisites
 

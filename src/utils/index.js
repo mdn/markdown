@@ -3,7 +3,7 @@ import parse from "rehype-parse";
 import format from "rehype-format";
 import stringify from "rehype-stringify";
 
-const KS_RE = /{{([^}]*)}}/g;
+const KS_RE = /({{2})([^}].+?)(}{2})/g;
 
 function encodeKS(raw) {
   return raw.replace(

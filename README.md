@@ -2,6 +2,11 @@
 
 MDN Web Docs tool to convert HTML to Markdown.
 
+> **Note**
+> Converting HTML content to Markdown in the MDN organization [is complete as of 2023](https://github.com/mdn/mdn-community/discussions/227#discussioncomment-4013450)
+> and so this repository is now archived. Many thanks to all contributors who helped build this tool and to all
+> who helped our [journey to get to 100% Markdown](https://hacks.mozilla.org/2022/09/the-100-percent-markdown-expedition/).
+
 ## Prerequisites
 
 - [git](https://git-scm.com/)
